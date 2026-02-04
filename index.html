@@ -19,7 +19,9 @@
       /* ========================================
          CSS Reset & Base Styles
          ======================================== */
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -43,9 +45,9 @@
         --text-secondary: #475569;
         --text-muted: #94a3b8;
         --border-color: #e2e8f0;
-        --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-        --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-        --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
         --radius-sm: 6px;
         --radius-md: 10px;
         --radius-lg: 16px;
@@ -62,15 +64,23 @@
         --border-color: #334155;
       }
 
-      html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+      }
 
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
         background: var(--bg-secondary);
         color: var(--text-primary);
         line-height: 1.6;
         min-height: 100vh;
-        transition: background var(--transition), color var(--transition);
+        transition:
+          background var(--transition),
+          color var(--transition);
       }
 
       /* ========================================
@@ -84,7 +94,9 @@
       }
 
       @media (min-width: 640px) {
-        .container { padding: 0 24px; }
+        .container {
+          padding: 0 24px;
+        }
       }
 
       .row {
@@ -100,25 +112,51 @@
 
       /* Responsive Column System */
       @media (min-width: 640px) {
-        .col-sm-6 { width: 50%; }
-        .col-sm-12 { width: 100%; }
+        .col-sm-6 {
+          width: 50%;
+        }
+        .col-sm-12 {
+          width: 100%;
+        }
       }
 
       @media (min-width: 768px) {
-        .col-md-4 { width: 33.333%; }
-        .col-md-6 { width: 50%; }
-        .col-md-8 { width: 66.666%; }
-        .col-md-12 { width: 100%; }
+        .col-md-4 {
+          width: 33.333%;
+        }
+        .col-md-6 {
+          width: 50%;
+        }
+        .col-md-8 {
+          width: 66.666%;
+        }
+        .col-md-12 {
+          width: 100%;
+        }
       }
 
       @media (min-width: 1024px) {
-        .col-lg-3 { width: 25%; }
-        .col-lg-4 { width: 33.333%; }
-        .col-lg-5 { width: 41.666%; }
-        .col-lg-6 { width: 50%; }
-        .col-lg-7 { width: 58.333%; }
-        .col-lg-8 { width: 66.666%; }
-        .col-lg-9 { width: 75%; }
+        .col-lg-3 {
+          width: 25%;
+        }
+        .col-lg-4 {
+          width: 33.333%;
+        }
+        .col-lg-5 {
+          width: 41.666%;
+        }
+        .col-lg-6 {
+          width: 50%;
+        }
+        .col-lg-7 {
+          width: 58.333%;
+        }
+        .col-lg-8 {
+          width: 66.666%;
+        }
+        .col-lg-9 {
+          width: 75%;
+        }
       }
 
       .section {
@@ -126,7 +164,9 @@
       }
 
       @media (min-width: 768px) {
-        .section { margin-bottom: 32px; }
+        .section {
+          margin-bottom: 32px;
+        }
       }
 
       /* ========================================
@@ -149,7 +189,9 @@
       }
 
       @media (min-width: 768px) {
-        .navbar-inner { height: 64px; }
+        .navbar-inner {
+          height: 64px;
+        }
       }
 
       .logo {
@@ -186,10 +228,14 @@
       }
 
       @media (min-width: 768px) {
-        .logo-text { font-size: 1.25rem; }
+        .logo-text {
+          font-size: 1.25rem;
+        }
       }
 
-      .logo-text span { color: var(--color-primary); }
+      .logo-text span {
+        color: var(--color-primary);
+      }
 
       .navbar-actions {
         display: flex;
@@ -198,7 +244,9 @@
       }
 
       @media (min-width: 768px) {
-        .navbar-actions { gap: 12px; }
+        .navbar-actions {
+          gap: 12px;
+        }
       }
 
       /* ========================================
@@ -229,14 +277,18 @@
         color: white;
       }
 
-      .btn-primary:hover { background: var(--color-primary-dark); }
+      .btn-primary:hover {
+        background: var(--color-primary-dark);
+      }
 
       .btn-secondary {
         background: var(--bg-tertiary);
         color: var(--text-primary);
       }
 
-      .btn-secondary:hover { background: var(--border-color); }
+      .btn-secondary:hover {
+        background: var(--border-color);
+      }
 
       .btn-icon {
         width: 36px;
@@ -277,7 +329,9 @@
         color: white;
       }
 
-      .unit-toggle .btn:not(.active) { background: transparent; }
+      .unit-toggle .btn:not(.active) {
+        background: transparent;
+      }
 
       /* ========================================
          Cards
@@ -292,14 +346,20 @@
       }
 
       @media (min-width: 768px) {
-        .card { padding: 20px; }
+        .card {
+          padding: 20px;
+        }
       }
 
       @media (min-width: 1024px) {
-        .card { padding: 24px; }
+        .card {
+          padding: 24px;
+        }
       }
 
-      .card:hover { box-shadow: var(--shadow-md); }
+      .card:hover {
+        box-shadow: var(--shadow-md);
+      }
 
       .card-header {
         display: flex;
@@ -320,7 +380,9 @@
       }
 
       @media (min-width: 768px) {
-        .card-title { font-size: 1rem; }
+        .card-title {
+          font-size: 1rem;
+        }
       }
 
       .card-subtitle {
@@ -329,10 +391,18 @@
         margin-top: 2px;
       }
 
-      .card-accent-gold { border-top: 3px solid var(--color-gold); }
-      .card-accent-silver { border-top: 3px solid var(--color-silver); }
-      .card-accent-primary { border-top: 3px solid var(--color-primary); }
-      .card-accent-success { border-top: 3px solid var(--color-success); }
+      .card-accent-gold {
+        border-top: 3px solid var(--color-gold);
+      }
+      .card-accent-silver {
+        border-top: 3px solid var(--color-silver);
+      }
+      .card-accent-primary {
+        border-top: 3px solid var(--color-primary);
+      }
+      .card-accent-success {
+        border-top: 3px solid var(--color-success);
+      }
 
       /* ========================================
          Page Header
@@ -360,7 +430,9 @@
       }
 
       @media (min-width: 768px) {
-        .page-title { font-size: 1.5rem; }
+        .page-title {
+          font-size: 1.5rem;
+        }
       }
 
       .page-subtitle {
@@ -368,7 +440,9 @@
         color: var(--text-secondary);
       }
 
-      .page-subtitle strong { color: var(--color-primary); }
+      .page-subtitle strong {
+        color: var(--color-primary);
+      }
 
       .page-meta {
         display: none;
@@ -407,8 +481,13 @@
       }
 
       @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.4; }
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
       }
 
       /* ========================================
@@ -447,7 +526,9 @@
       }
 
       @media (min-width: 768px) {
-        .price-value { font-size: 1.6rem; }
+        .price-value {
+          font-size: 1.6rem;
+        }
       }
 
       .price-change {
@@ -505,16 +586,33 @@
         }
       }
 
-      .badge-primary { background: rgba(37, 99, 235, 0.1); color: var(--color-primary); }
-      .badge-gold { background: rgba(202, 138, 4, 0.1); color: var(--color-gold); }
-      .badge-silver { background: rgba(100, 116, 139, 0.1); color: var(--color-silver); }
-      .badge-success { background: rgba(22, 163, 74, 0.1); color: var(--color-success); }
-      .badge-danger { background: rgba(220, 38, 38, 0.1); color: var(--color-danger); }
+      .badge-primary {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--color-primary);
+      }
+      .badge-gold {
+        background: rgba(202, 138, 4, 0.1);
+        color: var(--color-gold);
+      }
+      .badge-silver {
+        background: rgba(100, 116, 139, 0.1);
+        color: var(--color-silver);
+      }
+      .badge-success {
+        background: rgba(22, 163, 74, 0.1);
+        color: var(--color-success);
+      }
+      .badge-danger {
+        background: rgba(220, 38, 38, 0.1);
+        color: var(--color-danger);
+      }
 
       /* ========================================
          Forms
          ======================================== */
-      .form-group { margin-bottom: 12px; }
+      .form-group {
+        margin-bottom: 12px;
+      }
 
       .form-label {
         display: block;
@@ -535,7 +633,9 @@
         background: var(--bg-secondary);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-md);
-        transition: border-color var(--transition), box-shadow var(--transition);
+        transition:
+          border-color var(--transition),
+          box-shadow var(--transition);
       }
 
       .form-input:focus {
@@ -544,11 +644,17 @@
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
       }
 
-      .form-input::placeholder { color: var(--text-muted); }
+      .form-input::placeholder {
+        color: var(--text-muted);
+      }
 
-      .input-with-icon { position: relative; }
+      .input-with-icon {
+        position: relative;
+      }
 
-      .input-with-icon .form-input { padding-left: 40px; }
+      .input-with-icon .form-input {
+        padding-left: 40px;
+      }
 
       .input-with-icon .input-icon {
         position: absolute;
@@ -580,11 +686,15 @@
       }
 
       @media (min-width: 768px) {
-        .chart-wrapper { height: 250px; }
+        .chart-wrapper {
+          height: 250px;
+        }
       }
 
       @media (min-width: 1024px) {
-        .chart-wrapper { height: 280px; }
+        .chart-wrapper {
+          height: 280px;
+        }
       }
 
       .chart-stats {
@@ -595,7 +705,9 @@
         border-top: 1px solid var(--border-color);
       }
 
-      .chart-stat { text-align: center; }
+      .chart-stat {
+        text-align: center;
+      }
 
       .chart-stat-label {
         font-size: 0.6rem;
@@ -605,7 +717,9 @@
       }
 
       @media (min-width: 768px) {
-        .chart-stat-label { font-size: 0.65rem; }
+        .chart-stat-label {
+          font-size: 0.65rem;
+        }
       }
 
       .chart-stat-value {
@@ -616,21 +730,29 @@
       }
 
       @media (min-width: 768px) {
-        .chart-stat-value { font-size: 0.85rem; }
+        .chart-stat-value {
+          font-size: 0.85rem;
+        }
       }
 
       /* ========================================
          Portfolio
          ======================================== */
       .portfolio-summary {
-        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+        background: linear-gradient(
+          135deg,
+          var(--color-primary),
+          var(--color-primary-dark)
+        );
         border-radius: var(--radius-lg);
         padding: 16px;
         color: white;
       }
 
       @media (min-width: 768px) {
-        .portfolio-summary { padding: 20px; }
+        .portfolio-summary {
+          padding: 20px;
+        }
       }
 
       .portfolio-label {
@@ -648,7 +770,9 @@
       }
 
       @media (min-width: 768px) {
-        .portfolio-value { font-size: 1.8rem; }
+        .portfolio-value {
+          font-size: 1.8rem;
+        }
       }
 
       .portfolio-chart {
@@ -666,10 +790,14 @@
       }
 
       @media (min-width: 768px) {
-        .portfolio-breakdown { font-size: 0.7rem; }
+        .portfolio-breakdown {
+          font-size: 0.7rem;
+        }
       }
 
-      .portfolio-breakdown-item { text-align: center; }
+      .portfolio-breakdown-item {
+        text-align: center;
+      }
 
       .portfolio-breakdown-label {
         opacity: 0.7;
@@ -700,7 +828,9 @@
         transition: border-color var(--transition);
       }
 
-      .estimate-card:hover { border-color: var(--color-primary); }
+      .estimate-card:hover {
+        border-color: var(--color-primary);
+      }
 
       .estimate-icon {
         width: 40px;
@@ -722,8 +852,20 @@
         }
       }
 
-      .estimate-icon.gold { background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold)); }
-      .estimate-icon.silver { background: linear-gradient(135deg, var(--color-silver-light), var(--color-silver)); }
+      .estimate-icon.gold {
+        background: linear-gradient(
+          135deg,
+          var(--color-gold-light),
+          var(--color-gold)
+        );
+      }
+      .estimate-icon.silver {
+        background: linear-gradient(
+          135deg,
+          var(--color-silver-light),
+          var(--color-silver)
+        );
+      }
 
       .estimate-value {
         font-size: 1.2rem;
@@ -733,7 +875,9 @@
       }
 
       @media (min-width: 768px) {
-        .estimate-value { font-size: 1.4rem; }
+        .estimate-value {
+          font-size: 1.4rem;
+        }
       }
 
       .estimate-label {
@@ -779,8 +923,13 @@
         gap: 4px;
       }
 
-      .allocation-header-label { color: var(--text-muted); }
-      .allocation-header-value { color: var(--color-primary); font-weight: 600; }
+      .allocation-header-label {
+        color: var(--text-muted);
+      }
+      .allocation-header-value {
+        color: var(--color-primary);
+        font-weight: 600;
+      }
 
       .allocation-track {
         height: 6px;
@@ -791,7 +940,11 @@
 
       .allocation-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--color-gold-light), var(--color-gold));
+        background: linear-gradient(
+          90deg,
+          var(--color-gold-light),
+          var(--color-gold)
+        );
         border-radius: 3px;
       }
 
@@ -835,7 +988,9 @@
       }
 
       @media (min-width: 768px) {
-        .prediction-value { font-size: 1.2rem; }
+        .prediction-value {
+          font-size: 1.2rem;
+        }
       }
 
       .prediction-meta {
@@ -864,11 +1019,15 @@
       }
 
       @media (min-width: 640px) {
-        .insights-grid { grid-template-columns: repeat(2, 1fr); }
+        .insights-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       @media (min-width: 1024px) {
-        .insights-grid { grid-template-columns: repeat(3, 1fr); }
+        .insights-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
 
       .insight-card {
@@ -896,9 +1055,18 @@
         flex-shrink: 0;
       }
 
-      .insight-icon.blue { background: rgba(37, 99, 235, 0.1); color: var(--color-primary); }
-      .insight-icon.green { background: rgba(22, 163, 74, 0.1); color: var(--color-success); }
-      .insight-icon.purple { background: rgba(147, 51, 234, 0.1); color: #9333ea; }
+      .insight-icon.blue {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--color-primary);
+      }
+      .insight-icon.green {
+        background: rgba(22, 163, 74, 0.1);
+        color: var(--color-success);
+      }
+      .insight-icon.purple {
+        background: rgba(147, 51, 234, 0.1);
+        color: #9333ea;
+      }
 
       .insight-title {
         font-size: 0.85rem;
@@ -927,7 +1095,9 @@
         color: var(--text-muted);
       }
 
-      .footer-text i { color: var(--color-primary); }
+      .footer-text i {
+        color: var(--color-primary);
+      }
 
       .footer-disclaimer {
         font-size: 0.65rem;
@@ -938,36 +1108,68 @@
       /* ========================================
          Utilities
          ======================================== */
-      .text-gold { color: var(--color-gold); }
-      .text-silver { color: var(--color-silver); }
-      .text-success { color: var(--color-success); }
-      .text-danger { color: var(--color-danger); }
-      .text-primary { color: var(--color-primary); }
-      .text-muted { color: var(--text-muted); }
-      .text-warning { color: var(--color-warning); }
+      .text-gold {
+        color: var(--color-gold);
+      }
+      .text-silver {
+        color: var(--color-silver);
+      }
+      .text-success {
+        color: var(--color-success);
+      }
+      .text-danger {
+        color: var(--color-danger);
+      }
+      .text-primary {
+        color: var(--color-primary);
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+      .text-warning {
+        color: var(--color-warning);
+      }
 
-      .mb-0 { margin-bottom: 0; }
-      .mb-16 { margin-bottom: 16px; }
-      .mt-16 { margin-top: 16px; }
+      .mb-0 {
+        margin-bottom: 0;
+      }
+      .mb-16 {
+        margin-bottom: 16px;
+      }
+      .mt-16 {
+        margin-top: 16px;
+      }
 
-      main { padding: 8px 0 24px; }
+      main {
+        padding: 8px 0 24px;
+      }
 
       @media (min-width: 768px) {
-        main { padding: 16px 0 32px; }
+        main {
+          padding: 16px 0 32px;
+        }
       }
 
       /* Hide on mobile */
-      .hide-mobile { display: none; }
+      .hide-mobile {
+        display: none;
+      }
 
       @media (min-width: 640px) {
-        .hide-mobile { display: flex; }
+        .hide-mobile {
+          display: flex;
+        }
       }
 
       /* Show only on mobile */
-      .show-mobile { display: block; }
+      .show-mobile {
+        display: block;
+      }
 
       @media (min-width: 640px) {
-        .show-mobile { display: none; }
+        .show-mobile {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -983,19 +1185,11 @@
         </a>
 
         <div class="navbar-actions">
-          <div class="unit-toggle hide-mobile">
-            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">
-              Tola
-            </button>
-            <button onclick="setUnit('gram')" id="btn-gram" class="btn">
-              Gram
-            </button>
+          <div class="unit-toggle">
+            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">Tola</button>
+            <button onclick="setUnit('gram')" id="btn-gram" class="btn">Gram</button>
           </div>
-          <button
-            onclick="toggleTheme()"
-            class="btn btn-secondary btn-icon"
-            title="Toggle theme"
-          >
+          <button onclick="toggleTheme()" class="btn btn-secondary btn-icon" title="Toggle theme">
             <i id="theme-icon" class="fa-solid fa-moon"></i>
           </button>
         </div>
@@ -1005,310 +1199,268 @@
     <!-- Main Content -->
     <main>
       <div class="container">
-        <!-- Header Section -->
-        <section class="section">
-          <div class="grid grid-main">
-            <div>
-              <div class="page-header flex flex-between flex-center">
-                <div>
-                  <h1 class="page-title">Market Dashboard</h1>
-                  <p class="page-subtitle">
-                    Real-time prices with <strong>AI predictions</strong>
-                  </p>
-                </div>
-                <div class="page-meta hide-mobile">
-                  <div class="page-date" id="nav-date"></div>
-                  <div class="live-indicator">
-                    <span class="live-dot"></span>
-                    <span>Live Data</span>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Price Cards -->
-              <div class="grid grid-2" id="rates-container"></div>
-            </div>
-
-            <!-- Prediction Card -->
-            <div class="card card-accent-primary">
-              <div class="card-header">
-                <div>
-                  <h3 class="card-title">
-                    <i class="fa-solid fa-robot text-primary"></i>
-                    Trend Forecast
-                  </h3>
-                  <p class="card-subtitle">Next 24-hour projection</p>
-                </div>
-                <span class="badge badge-primary">AI Prediction</span>
-              </div>
-
-              <div class="prediction-item">
-                <div class="prediction-header">
-                  <div class="prediction-label">
-                    <i class="fa-solid fa-coins text-gold"></i>
-                    Gold Forecast
-                  </div>
-                  <span id="gold-pred-badge" class="badge"></span>
-                </div>
-                <div class="prediction-value" id="gold-prediction-text">
-                  ---
-                </div>
-                <div class="prediction-meta">
-                  Per <span class="unit-label">Tola</span>
-                </div>
-              </div>
-
-              <div class="prediction-item">
-                <div class="prediction-header">
-                  <div class="prediction-label">
-                    <i class="fa-solid fa-bars-staggered text-silver"></i>
-                    Silver Forecast
-                  </div>
-                  <span id="silver-pred-badge" class="badge"></span>
-                </div>
-                <div class="prediction-value" id="silver-prediction-text">
-                  ---
-                </div>
-                <div class="prediction-meta">
-                  Per <span class="unit-label">Tola</span>
-                </div>
-              </div>
-
-              <p class="prediction-disclaimer">
-                <i class="fa-solid fa-circle-info"></i>
-                Calculated using linear regression. Past performance does not
-                guarantee future results.
-              </p>
+        <!-- Page Header -->
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Market Dashboard</h1>
+            <p class="page-subtitle">Real-time prices with <strong>AI predictions</strong></p>
+          </div>
+          <div class="page-meta">
+            <div class="page-date" id="nav-date"></div>
+            <div class="live-indicator">
+              <span class="live-dot"></span>
+              <span>Live Data</span>
             </div>
           </div>
+        </div>
+
+        <!-- Price Cards Row -->
+        <section class="section">
+          <div class="row" id="rates-container"></div>
         </section>
 
-        <!-- Charts Section -->
+        <!-- AI Predictions + Charts Row -->
         <section class="section">
-          <div class="grid grid-2">
+          <div class="row">
+            <!-- AI Predictions Card -->
+            <div class="col col-md-12 col-lg-4" style="margin-bottom: 24px;">
+              <div class="card card-accent-primary">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">
+                      <i class="fa-solid fa-robot text-primary"></i>
+                      AI Forecast
+                    </h3>
+                    <p class="card-subtitle">24-hour projection</p>
+                  </div>
+                  <span class="badge badge-primary">Live</span>
+                </div>
+
+                <div class="predictions-grid">
+                  <div class="prediction-item">
+                    <div class="prediction-header">
+                      <div class="prediction-label">
+                        <i class="fa-solid fa-coins text-gold"></i>
+                        Gold
+                      </div>
+                      <span id="gold-pred-badge" class="badge"></span>
+                    </div>
+                    <div class="prediction-value" id="gold-prediction-text">---</div>
+                    <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+                  </div>
+
+                  <div class="prediction-item">
+                    <div class="prediction-header">
+                      <div class="prediction-label">
+                        <i class="fa-solid fa-bars-staggered text-silver"></i>
+                        Silver
+                      </div>
+                      <span id="silver-pred-badge" class="badge"></span>
+                    </div>
+                    <div class="prediction-value" id="silver-prediction-text">---</div>
+                    <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+                  </div>
+                </div>
+
+                <p class="prediction-disclaimer">
+                  <i class="fa-solid fa-circle-info"></i>
+                  Linear regression forecast. Not financial advice.
+                </p>
+              </div>
+            </div>
+
             <!-- Gold Chart -->
-            <div class="card card-accent-gold">
-              <div class="card-header">
-                <div>
-                  <h3 class="card-title">
-                    <i class="fa-solid fa-crown text-gold"></i>
-                    Gold Price
-                  </h3>
-                  <p class="card-subtitle">7-day history with projection</p>
+            <div class="col col-md-6 col-lg-4" style="margin-bottom: 24px;">
+              <div class="card card-accent-gold">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">
+                      <i class="fa-solid fa-crown text-gold"></i>
+                      Gold
+                    </h3>
+                    <p class="card-subtitle">7-day trend</p>
+                  </div>
+                  <span class="badge badge-gold">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                  </span>
                 </div>
-                <span class="badge badge-gold">
-                  <i class="fa-solid fa-arrow-trend-up"></i> Volatile
-                </span>
-              </div>
-              <div class="chart-wrapper">
-                <canvas id="goldChart"></canvas>
-              </div>
-              <div class="chart-stats">
-                <div class="chart-stat">
-                  <div class="chart-stat-label">Current</div>
-                  <div class="chart-stat-value" id="gold-current">---</div>
+                <div class="chart-wrapper">
+                  <canvas id="goldChart"></canvas>
                 </div>
-                <div class="chart-stat">
-                  <div class="chart-stat-label">7-Day High</div>
-                  <div class="chart-stat-value" id="gold-high">---</div>
-                </div>
-                <div class="chart-stat">
-                  <div class="chart-stat-label">7-Day Low</div>
-                  <div class="chart-stat-value" id="gold-low">---</div>
+                <div class="chart-stats">
+                  <div class="chart-stat">
+                    <div class="chart-stat-label">Current</div>
+                    <div class="chart-stat-value" id="gold-current">---</div>
+                  </div>
+                  <div class="chart-stat">
+                    <div class="chart-stat-label">High</div>
+                    <div class="chart-stat-value" id="gold-high">---</div>
+                  </div>
+                  <div class="chart-stat">
+                    <div class="chart-stat-label">Low</div>
+                    <div class="chart-stat-value" id="gold-low">---</div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Silver Chart -->
-            <div class="card card-accent-silver">
-              <div class="card-header">
-                <div>
-                  <h3 class="card-title">
-                    <i class="fa-solid fa-bars-staggered text-silver"></i>
-                    Silver Price
-                  </h3>
-                  <p class="card-subtitle">7-day history with projection</p>
+            <div class="col col-md-6 col-lg-4" style="margin-bottom: 24px;">
+              <div class="card card-accent-silver">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title">
+                      <i class="fa-solid fa-bars-staggered text-silver"></i>
+                      Silver
+                    </h3>
+                    <p class="card-subtitle">7-day trend</p>
+                  </div>
+                  <span class="badge badge-silver">
+                    <i class="fa-solid fa-chart-line"></i>
+                  </span>
                 </div>
-                <span class="badge badge-silver">
-                  <i class="fa-solid fa-chart-line"></i> Stable
-                </span>
-              </div>
-              <div class="chart-wrapper">
-                <canvas id="silverChart"></canvas>
-              </div>
-              <div class="chart-stats">
-                <div class="chart-stat">
-                  <div class="chart-stat-label">Current</div>
-                  <div class="chart-stat-value" id="silver-current">---</div>
+                <div class="chart-wrapper">
+                  <canvas id="silverChart"></canvas>
                 </div>
-                <div class="chart-stat">
-                  <div class="chart-stat-label">7-Day High</div>
-                  <div class="chart-stat-value" id="silver-high">---</div>
-                </div>
-                <div class="chart-stat">
-                  <div class="chart-stat-label">7-Day Low</div>
-                  <div class="chart-stat-value" id="silver-low">---</div>
+                <div class="chart-stats">
+                  <div class="chart-stat">
+                    <div class="chart-stat-label">Current</div>
+                    <div class="chart-stat-value" id="silver-current">---</div>
+                  </div>
+                  <div class="chart-stat">
+                    <div class="chart-stat-label">High</div>
+                    <div class="chart-stat-value" id="silver-high">---</div>
+                  </div>
+                  <div class="chart-stat">
+                    <div class="chart-stat-label">Low</div>
+                    <div class="chart-stat-value" id="silver-low">---</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Portfolio & Calculator Section -->
+        <!-- Portfolio & Calculator Row -->
         <section class="section">
-          <div class="grid grid-2">
-            <!-- Wealth Tracker -->
-            <div class="card card-accent-primary">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fa-solid fa-vault text-primary"></i>
-                  Wealth Tracker
-                </h3>
-              </div>
+          <div class="row">
+            <!-- Portfolio Tracker -->
+            <div class="col col-md-6 col-lg-6" style="margin-bottom: 24px;">
+              <div class="card card-accent-primary">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fa-solid fa-vault text-primary"></i>
+                    Portfolio
+                  </h3>
+                </div>
 
-              <div class="grid grid-2" style="margin-bottom: var(--spacing-lg)">
-                <div class="form-group">
-                  <label class="form-label">
-                    <i class="fa-solid fa-coins text-gold"></i>
-                    Gold (<span class="unit-label">Tola</span>)
-                  </label>
-                  <div class="input-with-icon">
-                    <i class="fa-solid fa-coins input-icon text-gold"></i>
-                    <input
-                      type="number"
-                      id="gold-input"
-                      value="5"
-                      class="form-input"
-                    />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">
-                    <i class="fa-solid fa-bars-staggered text-silver"></i>
-                    Silver (<span class="unit-label">Tola</span>)
-                  </label>
-                  <div class="input-with-icon">
-                    <i
-                      class="fa-solid fa-bars-staggered input-icon text-silver"
-                    ></i>
-                    <input
-                      type="number"
-                      id="silver-input"
-                      value="100"
-                      class="form-input"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div class="portfolio-summary">
-                <div class="portfolio-label">Portfolio Value</div>
-                <div class="portfolio-value" id="total-value">NPR 0.00</div>
-                <div class="portfolio-chart">
-                  <canvas id="portfolioChart"></canvas>
-                </div>
-                <div class="portfolio-breakdown">
-                  <div class="portfolio-breakdown-item">
-                    <div class="portfolio-breakdown-label">Gold Value</div>
-                    <div class="portfolio-breakdown-value" id="gold-value">
-                      NPR 0
+                <div class="form-row mb-16">
+                  <div class="form-group mb-0">
+                    <label class="form-label">
+                      <i class="fa-solid fa-coins text-gold"></i>
+                      Gold (<span class="unit-label">Tola</span>)
+                    </label>
+                    <div class="input-with-icon">
+                      <i class="fa-solid fa-coins input-icon text-gold"></i>
+                      <input type="number" id="gold-input" value="5" class="form-input" />
                     </div>
                   </div>
-                  <div class="portfolio-breakdown-item">
-                    <div class="portfolio-breakdown-label">Silver Value</div>
-                    <div class="portfolio-breakdown-value" id="silver-value">
-                      NPR 0
+                  <div class="form-group mb-0">
+                    <label class="form-label">
+                      <i class="fa-solid fa-bars-staggered text-silver"></i>
+                      Silver (<span class="unit-label">Tola</span>)
+                    </label>
+                    <div class="input-with-icon">
+                      <i class="fa-solid fa-bars-staggered input-icon text-silver"></i>
+                      <input type="number" id="silver-input" value="100" class="form-input" />
                     </div>
                   </div>
-                  <div class="portfolio-breakdown-item">
-                    <div class="portfolio-breakdown-label">7-Day Change</div>
-                    <div class="portfolio-breakdown-value" id="total-gain">
-                      +0.00%
+                </div>
+
+                <div class="portfolio-summary">
+                  <div class="portfolio-label">Total Value</div>
+                  <div class="portfolio-value" id="total-value">NPR 0.00</div>
+                  <div class="portfolio-chart">
+                    <canvas id="portfolioChart"></canvas>
+                  </div>
+                  <div class="portfolio-breakdown">
+                    <div class="portfolio-breakdown-item">
+                      <div class="portfolio-breakdown-label">Gold</div>
+                      <div class="portfolio-breakdown-value" id="gold-value">NPR 0</div>
+                    </div>
+                    <div class="portfolio-breakdown-item">
+                      <div class="portfolio-breakdown-label">Silver</div>
+                      <div class="portfolio-breakdown-value" id="silver-value">NPR 0</div>
+                    </div>
+                    <div class="portfolio-breakdown-item">
+                      <div class="portfolio-breakdown-label">7-Day</div>
+                      <div class="portfolio-breakdown-value" id="total-gain">+0.00%</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Purchasing Power -->
-            <div class="card card-accent-success">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fa-solid fa-calculator text-success"></i>
-                  Purchasing Power
-                </h3>
-              </div>
+            <!-- Purchasing Power Calculator -->
+            <div class="col col-md-6 col-lg-6" style="margin-bottom: 24px;">
+              <div class="card card-accent-success">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fa-solid fa-calculator text-success"></i>
+                    Calculator
+                  </h3>
+                </div>
 
-              <div class="form-group">
-                <label class="form-label">
-                  <i class="fa-solid fa-wallet text-success"></i>
-                  Your Budget (NPR)
-                </label>
-                <div class="input-with-icon">
-                  <i class="fa-solid fa-money-bill input-icon text-success"></i>
-                  <input
-                    type="number"
-                    id="budget-input"
-                    value="100000"
-                    placeholder="100000"
-                    class="form-input"
-                  />
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="fa-solid fa-wallet text-success"></i>
+                    Budget (NPR)
+                  </label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-money-bill input-icon text-success"></i>
+                    <input type="number" id="budget-input" value="100000" placeholder="100000" class="form-input" />
+                  </div>
+                  <div class="budget-presets">
+                    <button onclick="setBudget(50000)" class="btn btn-secondary">50K</button>
+                    <button onclick="setBudget(100000)" class="btn btn-secondary">100K</button>
+                    <button onclick="setBudget(250000)" class="btn btn-secondary">250K</button>
+                    <button onclick="setBudget(500000)" class="btn btn-secondary">500K</button>
+                  </div>
                 </div>
-                <div class="budget-presets">
-                  <button onclick="setBudget(50000)" class="btn btn-secondary">
-                    50K
-                  </button>
-                  <button onclick="setBudget(100000)" class="btn btn-secondary">
-                    100K
-                  </button>
-                  <button onclick="setBudget(250000)" class="btn btn-secondary">
-                    250K
-                  </button>
-                  <button onclick="setBudget(500000)" class="btn btn-secondary">
-                    500K
-                  </button>
-                </div>
-              </div>
 
-              <div class="grid grid-2" style="margin-top: var(--spacing-lg)">
-                <div class="estimate-card">
-                  <div class="estimate-icon gold">
-                    <i class="fa-solid fa-ring"></i>
+                <div class="estimates-grid">
+                  <div class="estimate-card">
+                    <div class="estimate-icon gold">
+                      <i class="fa-solid fa-ring"></i>
+                    </div>
+                    <div class="estimate-value" id="est-gold">0.00</div>
+                    <div class="estimate-label"><span class="unit-label">Tola</span> Gold</div>
                   </div>
-                  <div class="estimate-value" id="est-gold">0.00</div>
-                  <div class="estimate-label">
-                    <span class="unit-label">Tola</span> Gold
-                  </div>
-                </div>
-                <div class="estimate-card">
-                  <div class="estimate-icon silver">
-                    <i class="fa-solid fa-bars"></i>
-                  </div>
-                  <div class="estimate-value" id="est-silver">0.00</div>
-                  <div class="estimate-label">
-                    <span class="unit-label">Tola</span> Silver
+                  <div class="estimate-card">
+                    <div class="estimate-icon silver">
+                      <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div class="estimate-value" id="est-silver">0.00</div>
+                    <div class="estimate-label"><span class="unit-label">Tola</span> Silver</div>
                   </div>
                 </div>
-              </div>
 
-              <div class="allocation-bar">
-                <div class="allocation-header">
-                  <span class="allocation-header-label"
-                    >Recommended Allocation</span
-                  >
-                  <span class="allocation-header-value"
-                    >70% Gold / 30% Silver</span
-                  >
-                </div>
-                <div class="allocation-track">
-                  <div class="allocation-fill" style="width: 70%"></div>
+                <div class="allocation-bar">
+                  <div class="allocation-header">
+                    <span class="allocation-header-label">Recommended</span>
+                    <span class="allocation-header-value">70% Gold / 30% Silver</span>
+                  </div>
+                  <div class="allocation-track">
+                    <div class="allocation-fill" style="width: 70%"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Insights Section -->
+        <!-- Market Insights -->
         <section class="section">
           <div class="card">
             <div class="card-header">
@@ -1319,7 +1471,7 @@
               <span class="badge badge-primary">Updated Today</span>
             </div>
 
-            <div class="grid grid-3">
+            <div class="insights-grid">
               <div class="insight-card">
                 <div class="insight-header">
                   <div class="insight-icon blue">
@@ -1327,10 +1479,7 @@
                   </div>
                   <h4 class="insight-title">Market Trend</h4>
                 </div>
-                <p class="insight-text">
-                  Gold shows upward momentum with 3.2% weekly increase,
-                  indicating bullish sentiment among investors.
-                </p>
+                <p class="insight-text">Gold shows upward momentum with 3.2% weekly increase, indicating bullish sentiment.</p>
               </div>
 
               <div class="insight-card">
@@ -1340,10 +1489,7 @@
                   </div>
                   <h4 class="insight-title">Silver Outlook</h4>
                 </div>
-                <p class="insight-text">
-                  Silver remains stable with moderate volatility. Industrial
-                  demand continues to support price floor.
-                </p>
+                <p class="insight-text">Silver remains stable with moderate volatility. Industrial demand supports price floor.</p>
               </div>
 
               <div class="insight-card">
@@ -1353,14 +1499,12 @@
                   </div>
                   <h4 class="insight-title">Historical Context</h4>
                 </div>
-                <p class="insight-text">
-                  Current prices are 12% above 30-day average, suggesting
-                  potential for short-term correction.
-                </p>
+                <p class="insight-text">Current prices are 12% above 30-day average, suggesting potential for correction.</p>
               </div>
             </div>
           </div>
         </section>
+
       </div>
     </main>
 
@@ -1369,11 +1513,10 @@
       <div class="container">
         <p class="footer-text">
           <i class="fa-solid fa-shield-halved"></i>
-          BullionIntel &copy; 2026 — Market Intelligence Platform
+          BullionIntel &copy; 2026 — Market Intelligence
         </p>
         <p class="footer-disclaimer">
-          Data updated daily. Predictions are algorithmic and should not be
-          considered financial advice.
+          Data updated daily. Not financial advice.
         </p>
       </div>
     </footer>
