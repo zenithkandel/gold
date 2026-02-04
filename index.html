@@ -6,14 +6,22 @@
     <title>BullionIntel | Market Dashboard</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       /* ========================================
          CSS Reset & Base Styles
          ======================================== */
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -24,18 +32,18 @@
         --color-primary: #2563eb;
         --color-primary-dark: #1d4ed8;
         --color-primary-light: #3b82f6;
-        
+
         /* Gold & Silver */
         --color-gold: #ca8a04;
         --color-gold-light: #eab308;
         --color-silver: #64748b;
         --color-silver-light: #94a3b8;
-        
+
         /* Semantic Colors */
         --color-success: #16a34a;
         --color-danger: #dc2626;
         --color-warning: #d97706;
-        
+
         /* Neutrals - Light Mode */
         --bg-primary: #ffffff;
         --bg-secondary: #f8fafc;
@@ -45,7 +53,7 @@
         --text-muted: #94a3b8;
         --border-color: #e2e8f0;
         --shadow-color: rgba(0, 0, 0, 0.08);
-        
+
         /* Spacing */
         --spacing-xs: 0.25rem;
         --spacing-sm: 0.5rem;
@@ -53,12 +61,12 @@
         --spacing-lg: 1.5rem;
         --spacing-xl: 2rem;
         --spacing-2xl: 3rem;
-        
+
         /* Border Radius */
         --radius-sm: 6px;
         --radius-md: 8px;
         --radius-lg: 12px;
-        
+
         /* Transitions */
         --transition-fast: 150ms ease;
         --transition-normal: 250ms ease;
@@ -81,12 +89,18 @@
       }
 
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
         background-color: var(--bg-secondary);
         color: var(--text-primary);
         line-height: 1.6;
         min-height: 100vh;
-        transition: background-color var(--transition-normal), color var(--transition-normal);
+        transition:
+          background-color var(--transition-normal),
+          color var(--transition-normal);
       }
 
       /* ========================================
@@ -426,7 +440,9 @@
         background-color: var(--bg-secondary);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-md);
-        transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        transition:
+          border-color var(--transition-fast),
+          box-shadow var(--transition-fast);
       }
 
       .form-input:focus {
@@ -492,7 +508,11 @@
          Components - Portfolio
          ======================================== */
       .portfolio-summary {
-        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+        background: linear-gradient(
+          135deg,
+          var(--color-primary) 0%,
+          var(--color-primary-dark) 100%
+        );
         border-radius: var(--radius-lg);
         padding: var(--spacing-lg);
         color: white;
@@ -565,11 +585,19 @@
       }
 
       .estimate-icon.gold {
-        background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+        background: linear-gradient(
+          135deg,
+          var(--color-gold-light),
+          var(--color-gold)
+        );
       }
 
       .estimate-icon.silver {
-        background: linear-gradient(135deg, var(--color-silver-light), var(--color-silver));
+        background: linear-gradient(
+          135deg,
+          var(--color-silver-light),
+          var(--color-silver)
+        );
       }
 
       .estimate-value {
@@ -631,7 +659,11 @@
 
       .allocation-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--color-gold-light), var(--color-gold));
+        background: linear-gradient(
+          90deg,
+          var(--color-gold-light),
+          var(--color-gold)
+        );
         border-radius: 4px;
       }
 
@@ -794,8 +826,13 @@
       }
 
       @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
       }
 
       /* Main Content */
@@ -833,23 +870,49 @@
       /* ========================================
          Utility Classes
          ======================================== */
-      .text-gold { color: var(--color-gold); }
-      .text-silver { color: var(--color-silver); }
-      .text-success { color: var(--color-success); }
-      .text-danger { color: var(--color-danger); }
-      .text-primary { color: var(--color-primary); }
-      .text-muted { color: var(--text-muted); }
+      .text-gold {
+        color: var(--color-gold);
+      }
+      .text-silver {
+        color: var(--color-silver);
+      }
+      .text-success {
+        color: var(--color-success);
+      }
+      .text-danger {
+        color: var(--color-danger);
+      }
+      .text-primary {
+        color: var(--color-primary);
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
 
-      .flex { display: flex; }
-      .flex-between { justify-content: space-between; }
-      .flex-center { align-items: center; }
-      .gap-sm { gap: var(--spacing-sm); }
-      .gap-md { gap: var(--spacing-md); }
+      .flex {
+        display: flex;
+      }
+      .flex-between {
+        justify-content: space-between;
+      }
+      .flex-center {
+        align-items: center;
+      }
+      .gap-sm {
+        gap: var(--spacing-sm);
+      }
+      .gap-md {
+        gap: var(--spacing-md);
+      }
 
-      .hidden { display: none; }
+      .hidden {
+        display: none;
+      }
 
       @media (max-width: 576px) {
-        .hide-mobile { display: none; }
+        .hide-mobile {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -863,13 +926,21 @@
           </div>
           <div class="logo-text">Bullion<span>Intel</span></div>
         </a>
-        
+
         <div class="navbar-actions">
           <div class="unit-toggle hide-mobile">
-            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">Tola</button>
-            <button onclick="setUnit('gram')" id="btn-gram" class="btn">Gram</button>
+            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">
+              Tola
+            </button>
+            <button onclick="setUnit('gram')" id="btn-gram" class="btn">
+              Gram
+            </button>
           </div>
-          <button onclick="toggleTheme()" class="btn btn-secondary btn-icon" title="Toggle theme">
+          <button
+            onclick="toggleTheme()"
+            class="btn btn-secondary btn-icon"
+            title="Toggle theme"
+          >
             <i id="theme-icon" class="fa-solid fa-moon"></i>
           </button>
         </div>
@@ -879,7 +950,6 @@
     <!-- Main Content -->
     <main>
       <div class="container">
-        
         <!-- Header Section -->
         <section class="section">
           <div class="grid grid-main">
@@ -887,7 +957,9 @@
               <div class="page-header flex flex-between flex-center">
                 <div>
                   <h1 class="page-title">Market Dashboard</h1>
-                  <p class="page-subtitle">Real-time prices with <strong>AI predictions</strong></p>
+                  <p class="page-subtitle">
+                    Real-time prices with <strong>AI predictions</strong>
+                  </p>
                 </div>
                 <div class="page-meta hide-mobile">
                   <div class="page-date" id="nav-date"></div>
@@ -897,7 +969,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- Price Cards -->
               <div class="grid grid-2" id="rates-container"></div>
             </div>
@@ -923,8 +995,12 @@
                   </div>
                   <span id="gold-pred-badge" class="badge"></span>
                 </div>
-                <div class="prediction-value" id="gold-prediction-text">---</div>
-                <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+                <div class="prediction-value" id="gold-prediction-text">
+                  ---
+                </div>
+                <div class="prediction-meta">
+                  Per <span class="unit-label">Tola</span>
+                </div>
               </div>
 
               <div class="prediction-item">
@@ -935,13 +1011,18 @@
                   </div>
                   <span id="silver-pred-badge" class="badge"></span>
                 </div>
-                <div class="prediction-value" id="silver-prediction-text">---</div>
-                <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+                <div class="prediction-value" id="silver-prediction-text">
+                  ---
+                </div>
+                <div class="prediction-meta">
+                  Per <span class="unit-label">Tola</span>
+                </div>
               </div>
 
               <p class="prediction-disclaimer">
                 <i class="fa-solid fa-circle-info"></i>
-                Calculated using linear regression. Past performance does not guarantee future results.
+                Calculated using linear regression. Past performance does not
+                guarantee future results.
               </p>
             </div>
           </div>
@@ -1030,7 +1111,7 @@
                 </h3>
               </div>
 
-              <div class="grid grid-2" style="margin-bottom: var(--spacing-lg);">
+              <div class="grid grid-2" style="margin-bottom: var(--spacing-lg)">
                 <div class="form-group">
                   <label class="form-label">
                     <i class="fa-solid fa-coins text-gold"></i>
@@ -1038,7 +1119,12 @@
                   </label>
                   <div class="input-with-icon">
                     <i class="fa-solid fa-coins input-icon text-gold"></i>
-                    <input type="number" id="gold-input" value="5" class="form-input" />
+                    <input
+                      type="number"
+                      id="gold-input"
+                      value="5"
+                      class="form-input"
+                    />
                   </div>
                 </div>
                 <div class="form-group">
@@ -1047,8 +1133,15 @@
                     Silver (<span class="unit-label">Tola</span>)
                   </label>
                   <div class="input-with-icon">
-                    <i class="fa-solid fa-bars-staggered input-icon text-silver"></i>
-                    <input type="number" id="silver-input" value="100" class="form-input" />
+                    <i
+                      class="fa-solid fa-bars-staggered input-icon text-silver"
+                    ></i>
+                    <input
+                      type="number"
+                      id="silver-input"
+                      value="100"
+                      class="form-input"
+                    />
                   </div>
                 </div>
               </div>
@@ -1062,15 +1155,21 @@
                 <div class="portfolio-breakdown">
                   <div class="portfolio-breakdown-item">
                     <div class="portfolio-breakdown-label">Gold Value</div>
-                    <div class="portfolio-breakdown-value" id="gold-value">NPR 0</div>
+                    <div class="portfolio-breakdown-value" id="gold-value">
+                      NPR 0
+                    </div>
                   </div>
                   <div class="portfolio-breakdown-item">
                     <div class="portfolio-breakdown-label">Silver Value</div>
-                    <div class="portfolio-breakdown-value" id="silver-value">NPR 0</div>
+                    <div class="portfolio-breakdown-value" id="silver-value">
+                      NPR 0
+                    </div>
                   </div>
                   <div class="portfolio-breakdown-item">
                     <div class="portfolio-breakdown-label">7-Day Change</div>
-                    <div class="portfolio-breakdown-value" id="total-gain">+0.00%</div>
+                    <div class="portfolio-breakdown-value" id="total-gain">
+                      +0.00%
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1092,40 +1191,62 @@
                 </label>
                 <div class="input-with-icon">
                   <i class="fa-solid fa-money-bill input-icon text-success"></i>
-                  <input type="number" id="budget-input" value="100000" placeholder="100000" class="form-input" />
+                  <input
+                    type="number"
+                    id="budget-input"
+                    value="100000"
+                    placeholder="100000"
+                    class="form-input"
+                  />
                 </div>
                 <div class="budget-presets">
-                  <button onclick="setBudget(50000)" class="btn btn-secondary">50K</button>
-                  <button onclick="setBudget(100000)" class="btn btn-secondary">100K</button>
-                  <button onclick="setBudget(250000)" class="btn btn-secondary">250K</button>
-                  <button onclick="setBudget(500000)" class="btn btn-secondary">500K</button>
+                  <button onclick="setBudget(50000)" class="btn btn-secondary">
+                    50K
+                  </button>
+                  <button onclick="setBudget(100000)" class="btn btn-secondary">
+                    100K
+                  </button>
+                  <button onclick="setBudget(250000)" class="btn btn-secondary">
+                    250K
+                  </button>
+                  <button onclick="setBudget(500000)" class="btn btn-secondary">
+                    500K
+                  </button>
                 </div>
               </div>
 
-              <div class="grid grid-2" style="margin-top: var(--spacing-lg);">
+              <div class="grid grid-2" style="margin-top: var(--spacing-lg)">
                 <div class="estimate-card">
                   <div class="estimate-icon gold">
                     <i class="fa-solid fa-ring"></i>
                   </div>
                   <div class="estimate-value" id="est-gold">0.00</div>
-                  <div class="estimate-label"><span class="unit-label">Tola</span> Gold</div>
+                  <div class="estimate-label">
+                    <span class="unit-label">Tola</span> Gold
+                  </div>
                 </div>
                 <div class="estimate-card">
                   <div class="estimate-icon silver">
                     <i class="fa-solid fa-bars"></i>
                   </div>
                   <div class="estimate-value" id="est-silver">0.00</div>
-                  <div class="estimate-label"><span class="unit-label">Tola</span> Silver</div>
+                  <div class="estimate-label">
+                    <span class="unit-label">Tola</span> Silver
+                  </div>
                 </div>
               </div>
 
               <div class="allocation-bar">
                 <div class="allocation-header">
-                  <span class="allocation-header-label">Recommended Allocation</span>
-                  <span class="allocation-header-value">70% Gold / 30% Silver</span>
+                  <span class="allocation-header-label"
+                    >Recommended Allocation</span
+                  >
+                  <span class="allocation-header-value"
+                    >70% Gold / 30% Silver</span
+                  >
                 </div>
                 <div class="allocation-track">
-                  <div class="allocation-fill" style="width: 70%;"></div>
+                  <div class="allocation-fill" style="width: 70%"></div>
                 </div>
               </div>
             </div>
@@ -1151,7 +1272,10 @@
                   </div>
                   <h4 class="insight-title">Market Trend</h4>
                 </div>
-                <p class="insight-text">Gold shows upward momentum with 3.2% weekly increase, indicating bullish sentiment among investors.</p>
+                <p class="insight-text">
+                  Gold shows upward momentum with 3.2% weekly increase,
+                  indicating bullish sentiment among investors.
+                </p>
               </div>
 
               <div class="insight-card">
@@ -1161,7 +1285,10 @@
                   </div>
                   <h4 class="insight-title">Silver Outlook</h4>
                 </div>
-                <p class="insight-text">Silver remains stable with moderate volatility. Industrial demand continues to support price floor.</p>
+                <p class="insight-text">
+                  Silver remains stable with moderate volatility. Industrial
+                  demand continues to support price floor.
+                </p>
               </div>
 
               <div class="insight-card">
@@ -1171,12 +1298,14 @@
                   </div>
                   <h4 class="insight-title">Historical Context</h4>
                 </div>
-                <p class="insight-text">Current prices are 12% above 30-day average, suggesting potential for short-term correction.</p>
+                <p class="insight-text">
+                  Current prices are 12% above 30-day average, suggesting
+                  potential for short-term correction.
+                </p>
               </div>
             </div>
           </div>
         </section>
-
       </div>
     </main>
 
@@ -1188,19 +1317,13 @@
           BullionIntel &copy; 2026 — Market Intelligence Platform
         </p>
         <p class="footer-disclaimer">
-          Data updated daily. Predictions are algorithmic and should not be considered financial advice.
+          Data updated daily. Predictions are algorithmic and should not be
+          considered financial advice.
         </p>
       </div>
     </footer>
 
     <script>
-      // Initialize AOS (Animate on Scroll)
-      AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100,
-      });
-
       // --- DATA & STATE ---
       const rawData = {
         data: {
@@ -1313,12 +1436,13 @@
         },
       };
 
-      let currentUnit = "tola",
-        isDark = false,
-        goldChart = null,
-        silverChart = null,
-        portfolioChart = null;
+      let currentUnit = "tola";
+      let isDark = false;
+      let goldChart = null;
+      let silverChart = null;
+      let portfolioChart = null;
 
+      // Parse and sort data
       const parse = (rates) =>
         rates
           .map((r) => r.attributes)
@@ -1347,10 +1471,10 @@
         }
         const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
         const intercept = (sumY - slope * sumX) / n;
-        return slope * n + intercept; // Predict for next index
+        return slope * n + intercept;
       }
 
-      // --- RENDER FUNCTIONS ---
+      // --- MAIN REFRESH FUNCTION ---
       function refreshAll() {
         const priceKey = currentUnit === "tola" ? "perTolaNPR" : "perGramNPR";
         const curG = goldHistory[goldHistory.length - 1][priceKey];
@@ -1360,22 +1484,23 @@
         const predG = predictNextValue(goldHistory, priceKey);
         const predS = predictNextValue(silverHistory, priceKey);
 
-        // Update Text UI
+        // Update prediction text
         document.getElementById("gold-prediction-text").textContent =
           `NPR ${Math.round(predG).toLocaleString()}`;
         document.getElementById("silver-prediction-text").textContent =
           `NPR ${Math.round(predS).toLocaleString()}`;
 
+        // Update badges
         const setBadge = (id, cur, pred) => {
           const el = document.getElementById(id);
           const isUp = pred >= cur;
           el.textContent = isUp ? "BULLISH ▲" : "BEARISH ▼";
-          el.className = `text-[10px] font-bold px-2 py-1 rounded ${isUp ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"}`;
+          el.className = `badge ${isUp ? "badge-success" : "badge-danger"}`;
         };
         setBadge("gold-pred-badge", curG, predG);
         setBadge("silver-pred-badge", curS, predS);
 
-        // Update high/low values
+        // Update chart stats
         const goldValues = goldHistory.map((g) => g[priceKey]);
         const silverValues = silverHistory.map((s) => s[priceKey]);
 
@@ -1400,45 +1525,65 @@
         calculatePurchasingPower(priceKey);
       }
 
+      // --- RENDER PRICE CARDS ---
       function renderRates(key) {
-        const latestG = goldHistory[goldHistory.length - 1],
-          prevG = goldHistory[goldHistory.length - 2];
-        const latestS = silverHistory[silverHistory.length - 1],
-          prevS = silverHistory[silverHistory.length - 2];
+        const latestG = goldHistory[goldHistory.length - 1];
+        const prevG = goldHistory[goldHistory.length - 2];
+        const latestS = silverHistory[silverHistory.length - 1];
+        const prevS = silverHistory[silverHistory.length - 2];
 
-        const html = (title, curr, prev, color, icon) => {
-          const diff = curr[key] - prev[key],
-            isUp = diff >= 0;
+        const html = (title, curr, prev, type, icon) => {
+          const diff = curr[key] - prev[key];
+          const isUp = diff >= 0;
           const diffPercent = ((diff / prev[key]) * 100).toFixed(2);
-          return `<div class="glass-card p-5 border-l-4 ${color === "gold" ? "border-gold" : "border-silver"} hover:scale-[1.02] transition-transform duration-300">
-                    <div class="flex items-center justify-between mb-2">
-                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                            <i class="fa-solid ${icon} ${color === "gold" ? "text-gold" : "text-silver"}"></i> ${title}
-                        </p>
-                        <span class="text-[10px] font-bold ${isUp ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"} px-2 py-1 rounded-full">
-                            ${isUp ? "▲" : "▼"} ${Math.abs(diffPercent)}%
-                        </span>
-                    </div>
-                    <h2 class="text-2xl font-black mt-1">NPR ${curr[key].toLocaleString()}</h2>
-                    <div class="mt-4 flex items-center justify-between">
-                        <div class="text-xs text-slate-500">
-                            <i class="fa-solid fa-calendar-day mr-1"></i> Per <span class="unit-label font-semibold">Tola</span>
-                        </div>
-                        <div class="text-xs font-bold ${isUp ? "text-green-500" : "text-red-500"}">
-                            ${isUp ? "+" : ""}NPR ${Math.abs(diff).toLocaleString()}
-                        </div>
-                    </div>
-                </div>`;
+
+          return `
+            <div class="card card-accent-${type}">
+              <div class="price-card">
+                <div class="flex flex-between flex-center">
+                  <span class="price-label">
+                    <i class="fa-solid ${icon} text-${type}"></i>
+                    ${title}
+                  </span>
+                  <span class="price-change ${isUp ? "up" : "down"}">
+                    ${isUp ? "▲" : "▼"} ${Math.abs(diffPercent)}%
+                  </span>
+                </div>
+                <div class="price-value">NPR ${curr[key].toLocaleString()}</div>
+                <div class="price-meta">
+                  <span>Per <span class="unit-label">${currentUnit === "tola" ? "Tola" : "Gram"}</span></span>
+                  <span class="${isUp ? "text-success" : "text-danger"}">
+                    ${isUp ? "+" : ""}NPR ${Math.abs(diff).toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
         };
+
         document.getElementById("rates-container").innerHTML =
           html("Fine Gold", latestG, prevG, "gold", "fa-crown") +
           html("Silver", latestS, prevS, "silver", "fa-bars-staggered");
       }
 
+      // --- CHART CONFIGURATION ---
+      function getChartConfig(isDark) {
+        return {
+          gridColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
+          tickColor: isDark ? "#94a3b8" : "#64748b",
+          tooltipBg: isDark
+            ? "rgba(15, 23, 42, 0.95)"
+            : "rgba(255, 255, 255, 0.95)",
+          tooltipText: isDark ? "#f1f5f9" : "#0f172a",
+        };
+      }
+
+      // --- RENDER GOLD CHART ---
       function renderGoldChart(key, predG) {
         const ctx = document.getElementById("goldChart").getContext("2d");
-        const labels = [...dates, "Tomorrow (Est.)"];
+        const labels = [...dates, "Tomorrow"];
         const dataG = [...goldHistory.map((d) => d[key]), predG];
+        const config = getChartConfig(isDark);
 
         if (goldChart) goldChart.destroy();
         goldChart = new Chart(ctx, {
@@ -1449,18 +1594,18 @@
               {
                 label: "Gold",
                 data: dataG,
-                borderColor: "#d4af37",
+                borderColor: "#ca8a04",
                 backgroundColor: isDark
-                  ? "rgba(212,175,55,0.1)"
-                  : "rgba(212,175,55,0.05)",
-                borderWidth: 3,
+                  ? "rgba(202, 138, 4, 0.1)"
+                  : "rgba(202, 138, 4, 0.05)",
+                borderWidth: 2,
                 fill: true,
-                tension: 0.4,
-                pointBackgroundColor: "#d4af37",
-                pointBorderColor: "#fff",
+                tension: 0.3,
+                pointBackgroundColor: "#ca8a04",
+                pointBorderColor: isDark ? "#1e293b" : "#fff",
                 pointBorderWidth: 2,
-                pointRadius: 5,
-                pointHoverRadius: 8,
+                pointRadius: 4,
+                pointHoverRadius: 6,
                 segment: {
                   borderDash: (ctx) =>
                     ctx.p1DataIndex === labels.length - 1 ? [5, 5] : undefined,
@@ -1474,34 +1619,25 @@
             plugins: {
               legend: { display: false },
               tooltip: {
-                backgroundColor: isDark
-                  ? "rgba(26, 34, 54, 0.9)"
-                  : "rgba(255, 255, 255, 0.9)",
-                titleColor: isDark ? "#e2e8f0" : "#1e293b",
-                bodyColor: isDark ? "#e2e8f0" : "#1e293b",
-                borderColor: "#d4af37",
+                backgroundColor: config.tooltipBg,
+                titleColor: config.tooltipText,
+                bodyColor: config.tooltipText,
+                borderColor: "#ca8a04",
                 borderWidth: 1,
+                padding: 12,
+                cornerRadius: 8,
               },
             },
             interaction: { intersect: false, mode: "index" },
             scales: {
               x: {
-                grid: {
-                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-                  drawBorder: false,
-                },
-                ticks: {
-                  color: isDark ? "#94a3b8" : "#64748b",
-                  font: { size: 11 },
-                },
+                grid: { color: config.gridColor, drawBorder: false },
+                ticks: { color: config.tickColor, font: { size: 11 } },
               },
               y: {
-                grid: {
-                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-                  drawBorder: false,
-                },
+                grid: { color: config.gridColor, drawBorder: false },
                 ticks: {
-                  color: "#94a3b8",
+                  color: config.tickColor,
                   font: { size: 10 },
                   callback: (v) => (v / 1000).toFixed(0) + "k",
                 },
@@ -1511,10 +1647,12 @@
         });
       }
 
+      // --- RENDER SILVER CHART ---
       function renderSilverChart(key, predS) {
         const ctx = document.getElementById("silverChart").getContext("2d");
-        const labels = [...dates, "Tomorrow (Est.)"];
+        const labels = [...dates, "Tomorrow"];
         const dataS = [...silverHistory.map((d) => d[key]), predS];
+        const config = getChartConfig(isDark);
 
         if (silverChart) silverChart.destroy();
         silverChart = new Chart(ctx, {
@@ -1525,18 +1663,18 @@
               {
                 label: "Silver",
                 data: dataS,
-                borderColor: "#9ca3af",
+                borderColor: "#64748b",
                 backgroundColor: isDark
-                  ? "rgba(156, 163, 175, 0.1)"
-                  : "rgba(156, 163, 175, 0.05)",
-                borderWidth: 3,
+                  ? "rgba(100, 116, 139, 0.1)"
+                  : "rgba(100, 116, 139, 0.05)",
+                borderWidth: 2,
                 fill: true,
-                tension: 0.4,
-                pointBackgroundColor: "#9ca3af",
-                pointBorderColor: "#fff",
+                tension: 0.3,
+                pointBackgroundColor: "#64748b",
+                pointBorderColor: isDark ? "#1e293b" : "#fff",
                 pointBorderWidth: 2,
-                pointRadius: 5,
-                pointHoverRadius: 8,
+                pointRadius: 4,
+                pointHoverRadius: 6,
                 segment: {
                   borderDash: (ctx) =>
                     ctx.p1DataIndex === labels.length - 1 ? [5, 5] : undefined,
@@ -1550,34 +1688,25 @@
             plugins: {
               legend: { display: false },
               tooltip: {
-                backgroundColor: isDark
-                  ? "rgba(26, 34, 54, 0.9)"
-                  : "rgba(255, 255, 255, 0.9)",
-                titleColor: isDark ? "#e2e8f0" : "#1e293b",
-                bodyColor: isDark ? "#e2e8f0" : "#1e293b",
-                borderColor: "#9ca3af",
+                backgroundColor: config.tooltipBg,
+                titleColor: config.tooltipText,
+                bodyColor: config.tooltipText,
+                borderColor: "#64748b",
                 borderWidth: 1,
+                padding: 12,
+                cornerRadius: 8,
               },
             },
             interaction: { intersect: false, mode: "index" },
             scales: {
               x: {
-                grid: {
-                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-                  drawBorder: false,
-                },
-                ticks: {
-                  color: isDark ? "#94a3b8" : "#64748b",
-                  font: { size: 11 },
-                },
+                grid: { color: config.gridColor, drawBorder: false },
+                ticks: { color: config.tickColor, font: { size: 11 } },
               },
               y: {
-                grid: {
-                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-                  drawBorder: false,
-                },
+                grid: { color: config.gridColor, drawBorder: false },
                 ticks: {
-                  color: "#94a3b8",
+                  color: config.tickColor,
                   font: { size: 10 },
                   callback: (v) => (v / 1000).toFixed(0) + "k",
                 },
@@ -1587,6 +1716,7 @@
         });
       }
 
+      // --- PORTFOLIO CALCULATOR ---
       function calculatePortfolio(key) {
         const g = parseFloat(document.getElementById("gold-input").value) || 0;
         const s =
@@ -1597,11 +1727,10 @@
         const total = history[history.length - 1];
         const goldValue = g * goldHistory[goldHistory.length - 1][key];
         const silverValue = s * silverHistory[silverHistory.length - 1][key];
-
-        // Calculate percentage gain/loss (simplified)
-        const gainPercent = (((total - history[0]) / history[0]) * 100).toFixed(
-          2,
-        );
+        const gainPercent =
+          history[0] > 0
+            ? (((total - history[0]) / history[0]) * 100).toFixed(2)
+            : "0.00";
 
         document.getElementById("total-value").textContent =
           `NPR ${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
@@ -1621,9 +1750,9 @@
             datasets: [
               {
                 data: history,
-                borderColor: "#fff",
-                backgroundColor: "rgba(255,255,255,0.1)",
-                borderWidth: 3,
+                borderColor: "rgba(255, 255, 255, 0.8)",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                borderWidth: 2,
                 pointRadius: 0,
                 tension: 0.4,
                 fill: true,
@@ -1635,46 +1764,44 @@
             maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: { x: { display: false }, y: { display: false } },
-            elements: {
-              point: {
-                radius: 0,
-              },
-            },
           },
         });
       }
 
+      // --- PURCHASING POWER CALCULATOR ---
       function calculatePurchasingPower(key) {
         const budget =
           parseFloat(document.getElementById("budget-input").value) || 0;
+        const goldPrice = goldHistory[goldHistory.length - 1][key];
+        const silverPrice = silverHistory[silverHistory.length - 1][key];
+
         document.getElementById("est-gold").textContent = (
-          budget / goldHistory[goldHistory.length - 1][key]
+          budget / goldPrice
         ).toFixed(3);
         document.getElementById("est-silver").textContent = (
-          budget / silverHistory[silverHistory.length - 1][key]
+          budget / silverPrice
         ).toFixed(2);
       }
 
-      // --- UTILS ---
+      // --- UNIT TOGGLE ---
       window.setUnit = (u) => {
         currentUnit = u;
-        const activeClass =
-          "px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand to-brand-dark text-white shadow-md hover:shadow-lg";
-        const inactiveClass =
-          "px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700";
 
+        // Update button states
         document.getElementById("btn-tola").className =
-          u === "tola" ? activeClass : inactiveClass;
+          u === "tola" ? "btn active" : "btn";
         document.getElementById("btn-gram").className =
-          u === "gram" ? activeClass : inactiveClass;
-        document
-          .querySelectorAll(".unit-label")
-          .forEach(
-            (el) => (el.textContent = u.charAt(0).toUpperCase() + u.slice(1)),
-          );
+          u === "gram" ? "btn active" : "btn";
+
+        // Update all unit labels
+        document.querySelectorAll(".unit-label").forEach((el) => {
+          el.textContent = u.charAt(0).toUpperCase() + u.slice(1);
+        });
+
         refreshAll();
       };
 
+      // --- BUDGET PRESET ---
       window.setBudget = (amount) => {
         document.getElementById("budget-input").value = amount;
         calculatePurchasingPower(
@@ -1682,73 +1809,53 @@
         );
       };
 
+      // --- THEME TOGGLE ---
       function toggleTheme() {
         isDark = !isDark;
         document.documentElement.classList.toggle("dark");
-        const icon = document.getElementById("theme-icon");
-        icon.className = isDark
-          ? "fa-solid fa-sun text-lg"
-          : "fa-solid fa-moon text-lg";
 
-        // Update charts with new theme
+        const icon = document.getElementById("theme-icon");
+        icon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+
         refreshAll();
       }
 
-      // Parallax scroll effect
-      window.addEventListener("scroll", () => {
-        const scrolled = window.pageYOffset;
-        const parallaxLayers = document.querySelectorAll(".parallax-bg");
+      // --- INITIALIZE ---
+      document.addEventListener("DOMContentLoaded", () => {
+        // Set current date
+        document.getElementById("nav-date").textContent =
+          new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
 
-        parallaxLayers.forEach((layer, index) => {
-          const speed = 0.2 * (index + 1);
-          const yPos = -(scrolled * speed);
-          layer.style.transform = `translateY(${yPos}px) translateZ(-${index * 2}px) scale(${1 + index * 0.5})`;
-        });
-      });
-
-      // Initialize date
-      document.getElementById("nav-date").textContent =
-        new Date().toLocaleDateString("en-US", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-
-      // Event listeners
-      document
-        .getElementById("gold-input")
-        .addEventListener("input", () =>
+        // Event listeners for inputs
+        document.getElementById("gold-input").addEventListener("input", () => {
           calculatePortfolio(
             currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
-          ),
-        );
-      document
-        .getElementById("silver-input")
-        .addEventListener("input", () =>
-          calculatePortfolio(
-            currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
-          ),
-        );
-      document
-        .getElementById("budget-input")
-        .addEventListener("input", () =>
-          calculatePurchasingPower(
-            currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
-          ),
-        );
-
-      // Initialize
-      refreshAll();
-
-      // Add hover effect to all glass cards
-      document.querySelectorAll(".glass-card").forEach((card) => {
-        card.addEventListener("mouseenter", function () {
-          this.style.transform = "translateY(-8px)";
+          );
         });
-        card.addEventListener("mouseleave", function () {
-          this.style.transform = "translateY(0)";
-        });
+
+        document
+          .getElementById("silver-input")
+          .addEventListener("input", () => {
+            calculatePortfolio(
+              currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
+            );
+          });
+
+        document
+          .getElementById("budget-input")
+          .addEventListener("input", () => {
+            calculatePurchasingPower(
+              currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
+            );
+          });
+
+        // Initialize dashboard
+        refreshAll();
       });
     </script>
   </body>
