@@ -1186,10 +1186,18 @@
 
         <div class="navbar-actions">
           <div class="unit-toggle">
-            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">Tola</button>
-            <button onclick="setUnit('gram')" id="btn-gram" class="btn">Gram</button>
+            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">
+              Tola
+            </button>
+            <button onclick="setUnit('gram')" id="btn-gram" class="btn">
+              Gram
+            </button>
           </div>
-          <button onclick="toggleTheme()" class="btn btn-secondary btn-icon" title="Toggle theme">
+          <button
+            onclick="toggleTheme()"
+            class="btn btn-secondary btn-icon"
+            title="Toggle theme"
+          >
             <i id="theme-icon" class="fa-solid fa-moon"></i>
           </button>
         </div>
@@ -1199,12 +1207,13 @@
     <!-- Main Content -->
     <main>
       <div class="container">
-
         <!-- Page Header -->
         <div class="page-header">
           <div>
             <h1 class="page-title">Market Dashboard</h1>
-            <p class="page-subtitle">Real-time prices with <strong>AI predictions</strong></p>
+            <p class="page-subtitle">
+              Real-time prices with <strong>AI predictions</strong>
+            </p>
           </div>
           <div class="page-meta">
             <div class="page-date" id="nav-date"></div>
@@ -1224,7 +1233,7 @@
         <section class="section">
           <div class="row">
             <!-- AI Predictions Card -->
-            <div class="col col-md-12 col-lg-4" style="margin-bottom: 24px;">
+            <div class="col col-md-12 col-lg-4" style="margin-bottom: 24px">
               <div class="card card-accent-primary">
                 <div class="card-header">
                   <div>
@@ -1246,8 +1255,12 @@
                       </div>
                       <span id="gold-pred-badge" class="badge"></span>
                     </div>
-                    <div class="prediction-value" id="gold-prediction-text">---</div>
-                    <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+                    <div class="prediction-value" id="gold-prediction-text">
+                      ---
+                    </div>
+                    <div class="prediction-meta">
+                      Per <span class="unit-label">Tola</span>
+                    </div>
                   </div>
 
                   <div class="prediction-item">
@@ -1258,8 +1271,12 @@
                       </div>
                       <span id="silver-pred-badge" class="badge"></span>
                     </div>
-                    <div class="prediction-value" id="silver-prediction-text">---</div>
-                    <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+                    <div class="prediction-value" id="silver-prediction-text">
+                      ---
+                    </div>
+                    <div class="prediction-meta">
+                      Per <span class="unit-label">Tola</span>
+                    </div>
                   </div>
                 </div>
 
@@ -1271,7 +1288,7 @@
             </div>
 
             <!-- Gold Chart -->
-            <div class="col col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="col col-md-6 col-lg-4" style="margin-bottom: 24px">
               <div class="card card-accent-gold">
                 <div class="card-header">
                   <div>
@@ -1306,7 +1323,7 @@
             </div>
 
             <!-- Silver Chart -->
-            <div class="col col-md-6 col-lg-4" style="margin-bottom: 24px;">
+            <div class="col col-md-6 col-lg-4" style="margin-bottom: 24px">
               <div class="card card-accent-silver">
                 <div class="card-header">
                   <div>
@@ -1346,7 +1363,7 @@
         <section class="section">
           <div class="row">
             <!-- Portfolio Tracker -->
-            <div class="col col-md-6 col-lg-6" style="margin-bottom: 24px;">
+            <div class="col col-md-6 col-lg-6" style="margin-bottom: 24px">
               <div class="card card-accent-primary">
                 <div class="card-header">
                   <h3 class="card-title">
@@ -1363,7 +1380,12 @@
                     </label>
                     <div class="input-with-icon">
                       <i class="fa-solid fa-coins input-icon text-gold"></i>
-                      <input type="number" id="gold-input" value="5" class="form-input" />
+                      <input
+                        type="number"
+                        id="gold-input"
+                        value="5"
+                        class="form-input"
+                      />
                     </div>
                   </div>
                   <div class="form-group mb-0">
@@ -1372,8 +1394,15 @@
                       Silver (<span class="unit-label">Tola</span>)
                     </label>
                     <div class="input-with-icon">
-                      <i class="fa-solid fa-bars-staggered input-icon text-silver"></i>
-                      <input type="number" id="silver-input" value="100" class="form-input" />
+                      <i
+                        class="fa-solid fa-bars-staggered input-icon text-silver"
+                      ></i>
+                      <input
+                        type="number"
+                        id="silver-input"
+                        value="100"
+                        class="form-input"
+                      />
                     </div>
                   </div>
                 </div>
@@ -1387,15 +1416,21 @@
                   <div class="portfolio-breakdown">
                     <div class="portfolio-breakdown-item">
                       <div class="portfolio-breakdown-label">Gold</div>
-                      <div class="portfolio-breakdown-value" id="gold-value">NPR 0</div>
+                      <div class="portfolio-breakdown-value" id="gold-value">
+                        NPR 0
+                      </div>
                     </div>
                     <div class="portfolio-breakdown-item">
                       <div class="portfolio-breakdown-label">Silver</div>
-                      <div class="portfolio-breakdown-value" id="silver-value">NPR 0</div>
+                      <div class="portfolio-breakdown-value" id="silver-value">
+                        NPR 0
+                      </div>
                     </div>
                     <div class="portfolio-breakdown-item">
                       <div class="portfolio-breakdown-label">7-Day</div>
-                      <div class="portfolio-breakdown-value" id="total-gain">+0.00%</div>
+                      <div class="portfolio-breakdown-value" id="total-gain">
+                        +0.00%
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1403,7 +1438,7 @@
             </div>
 
             <!-- Purchasing Power Calculator -->
-            <div class="col col-md-6 col-lg-6" style="margin-bottom: 24px;">
+            <div class="col col-md-6 col-lg-6" style="margin-bottom: 24px">
               <div class="card card-accent-success">
                 <div class="card-header">
                   <h3 class="card-title">
@@ -1418,14 +1453,42 @@
                     Budget (NPR)
                   </label>
                   <div class="input-with-icon">
-                    <i class="fa-solid fa-money-bill input-icon text-success"></i>
-                    <input type="number" id="budget-input" value="100000" placeholder="100000" class="form-input" />
+                    <i
+                      class="fa-solid fa-money-bill input-icon text-success"
+                    ></i>
+                    <input
+                      type="number"
+                      id="budget-input"
+                      value="100000"
+                      placeholder="100000"
+                      class="form-input"
+                    />
                   </div>
                   <div class="budget-presets">
-                    <button onclick="setBudget(50000)" class="btn btn-secondary">50K</button>
-                    <button onclick="setBudget(100000)" class="btn btn-secondary">100K</button>
-                    <button onclick="setBudget(250000)" class="btn btn-secondary">250K</button>
-                    <button onclick="setBudget(500000)" class="btn btn-secondary">500K</button>
+                    <button
+                      onclick="setBudget(50000)"
+                      class="btn btn-secondary"
+                    >
+                      50K
+                    </button>
+                    <button
+                      onclick="setBudget(100000)"
+                      class="btn btn-secondary"
+                    >
+                      100K
+                    </button>
+                    <button
+                      onclick="setBudget(250000)"
+                      class="btn btn-secondary"
+                    >
+                      250K
+                    </button>
+                    <button
+                      onclick="setBudget(500000)"
+                      class="btn btn-secondary"
+                    >
+                      500K
+                    </button>
                   </div>
                 </div>
 
@@ -1435,21 +1498,27 @@
                       <i class="fa-solid fa-ring"></i>
                     </div>
                     <div class="estimate-value" id="est-gold">0.00</div>
-                    <div class="estimate-label"><span class="unit-label">Tola</span> Gold</div>
+                    <div class="estimate-label">
+                      <span class="unit-label">Tola</span> Gold
+                    </div>
                   </div>
                   <div class="estimate-card">
                     <div class="estimate-icon silver">
                       <i class="fa-solid fa-bars"></i>
                     </div>
                     <div class="estimate-value" id="est-silver">0.00</div>
-                    <div class="estimate-label"><span class="unit-label">Tola</span> Silver</div>
+                    <div class="estimate-label">
+                      <span class="unit-label">Tola</span> Silver
+                    </div>
                   </div>
                 </div>
 
                 <div class="allocation-bar">
                   <div class="allocation-header">
                     <span class="allocation-header-label">Recommended</span>
-                    <span class="allocation-header-value">70% Gold / 30% Silver</span>
+                    <span class="allocation-header-value"
+                      >70% Gold / 30% Silver</span
+                    >
                   </div>
                   <div class="allocation-track">
                     <div class="allocation-fill" style="width: 70%"></div>
@@ -1479,7 +1548,10 @@
                   </div>
                   <h4 class="insight-title">Market Trend</h4>
                 </div>
-                <p class="insight-text">Gold shows upward momentum with 3.2% weekly increase, indicating bullish sentiment.</p>
+                <p class="insight-text">
+                  Gold shows upward momentum with 3.2% weekly increase,
+                  indicating bullish sentiment.
+                </p>
               </div>
 
               <div class="insight-card">
@@ -1489,7 +1561,10 @@
                   </div>
                   <h4 class="insight-title">Silver Outlook</h4>
                 </div>
-                <p class="insight-text">Silver remains stable with moderate volatility. Industrial demand supports price floor.</p>
+                <p class="insight-text">
+                  Silver remains stable with moderate volatility. Industrial
+                  demand supports price floor.
+                </p>
               </div>
 
               <div class="insight-card">
@@ -1499,12 +1574,14 @@
                   </div>
                   <h4 class="insight-title">Historical Context</h4>
                 </div>
-                <p class="insight-text">Current prices are 12% above 30-day average, suggesting potential for correction.</p>
+                <p class="insight-text">
+                  Current prices are 12% above 30-day average, suggesting
+                  potential for correction.
+                </p>
               </div>
             </div>
           </div>
         </section>
-
       </div>
     </main>
 
@@ -1736,23 +1813,25 @@
           const diffPercent = ((diff / prev[key]) * 100).toFixed(2);
 
           return `
-            <div class="card card-accent-${type}">
-              <div class="price-card">
-                <div class="flex flex-between flex-center">
-                  <span class="price-label">
-                    <i class="fa-solid ${icon} text-${type}"></i>
-                    ${title}
-                  </span>
-                  <span class="price-change ${isUp ? "up" : "down"}">
-                    ${isUp ? "▲" : "▼"} ${Math.abs(diffPercent)}%
-                  </span>
-                </div>
-                <div class="price-value">NPR ${curr[key].toLocaleString()}</div>
-                <div class="price-meta">
-                  <span>Per <span class="unit-label">${currentUnit === "tola" ? "Tola" : "Gram"}</span></span>
-                  <span class="${isUp ? "text-success" : "text-danger"}">
-                    ${isUp ? "+" : ""}NPR ${Math.abs(diff).toLocaleString()}
-                  </span>
+            <div class="col col-sm-6" style="margin-bottom: 16px;">
+              <div class="card card-accent-${type}">
+                <div class="price-card">
+                  <div class="price-header">
+                    <span class="price-label">
+                      <i class="fa-solid ${icon} text-${type}"></i>
+                      ${title}
+                    </span>
+                    <span class="price-change ${isUp ? "up" : "down"}">
+                      ${isUp ? "▲" : "▼"} ${Math.abs(diffPercent)}%
+                    </span>
+                  </div>
+                  <div class="price-value">NPR ${curr[key].toLocaleString()}</div>
+                  <div class="price-meta">
+                    <span>Per <span class="unit-label">${currentUnit === "tola" ? "Tola" : "Gram"}</span></span>
+                    <span class="${isUp ? "text-success" : "text-danger"}">
+                      ${isUp ? "+" : ""}NPR ${Math.abs(diff).toLocaleString()}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
