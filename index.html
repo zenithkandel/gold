@@ -1,0 +1,1548 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bullion Intelligence | Advanced Market Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- AOS Library for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                light: "#afbbeb",
+                DEFAULT: "#7b96c8",
+                dark: "#5a75a8",
+              },
+              gold: {
+                light: "#f4d06f",
+                DEFAULT: "#d4af37",
+                dark: "#b8951e",
+              },
+              silver: {
+                light: "#cbd5e1",
+                DEFAULT: "#9ca3af",
+                dark: "#6b7280",
+              },
+              dark: {
+                bg: "#0a0f1a",
+                card: "#1a2236",
+                border: "#2d3748",
+                text: "#e2e8f0",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Inter", "sans-serif"],
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+              shimmer: "shimmer 4s infinite",
+              "bounce-slow": "bounce-slow 3s infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-20px)" },
+              },
+              "pulse-glow": {
+                "0%, 100%": { opacity: 1 },
+                "50%": { opacity: 0.7 },
+              },
+              shimmer: {
+                "0%": { transform: "translateX(-100%) rotate(45deg)" },
+                "100%": { transform: "translateX(100%) rotate(45deg)" },
+              },
+              "bounce-slow": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        transition: background-color 0.5s ease;
+        overflow-x: hidden;
+      }
+
+      /* Parallax background layers */
+      .parallax-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+        pointer-events: none;
+      }
+
+      .parallax-layer-1 {
+        background: radial-gradient(
+          circle at 10% 20%,
+          rgba(123, 150, 200, 0.05) 0%,
+          transparent 20%
+        );
+        transform: translateZ(-2px) scale(1.5);
+      }
+
+      .parallax-layer-2 {
+        background: radial-gradient(
+          circle at 90% 80%,
+          rgba(212, 175, 55, 0.03) 0%,
+          transparent 20%
+        );
+        transform: translateZ(-4px) scale(2);
+      }
+
+      .parallax-layer-3 {
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(156, 163, 175, 0.02) 0%,
+          transparent 25%
+        );
+        transform: translateZ(-6px) scale(2.5);
+      }
+
+      .dark .parallax-layer-1 {
+        background: radial-gradient(
+          circle at 10% 20%,
+          rgba(123, 150, 200, 0.08) 0%,
+          transparent 20%
+        );
+      }
+
+      .dark .parallax-layer-2 {
+        background: radial-gradient(
+          circle at 90% 80%,
+          rgba(212, 175, 55, 0.05) 0%,
+          transparent 20%
+        );
+      }
+
+      .dark .parallax-layer-3 {
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(156, 163, 175, 0.03) 0%,
+          transparent 25%
+        );
+      }
+
+      /* Glass card effect */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .glass-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+        border-color: rgba(123, 150, 200, 0.4);
+      }
+
+      .dark .glass-card {
+        background: rgba(26, 34, 54, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .dark .glass-card:hover {
+        border-color: rgba(123, 150, 200, 0.3);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Custom inputs */
+      .custom-input {
+        transition: all 0.3s;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        border-radius: 14px;
+      }
+
+      .custom-input:hover {
+        border-color: #7b96c8;
+        box-shadow: 0 0 0 3px rgba(123, 150, 200, 0.1);
+      }
+
+      .dark .custom-input {
+        background: rgba(15, 23, 42, 0.7);
+        border-color: #334155;
+        color: #e2e8f0;
+      }
+
+      .dark .custom-input:hover {
+        border-color: #7b96c8;
+        box-shadow: 0 0 0 3px rgba(123, 150, 200, 0.2);
+      }
+
+      .custom-input:focus {
+        border-color: #7b96c8;
+        box-shadow: 0 0 0 4px rgba(123, 150, 200, 0.2);
+        outline: none;
+      }
+
+      /* Shimmer effect */
+      .prediction-glow {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .prediction-glow::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(123, 150, 200, 0.05),
+          transparent
+        );
+        transform: rotate(45deg);
+        animation: shimmer 4s infinite;
+      }
+
+      /* Gold and silver gradients */
+      .gold-gradient {
+        background: linear-gradient(
+          135deg,
+          #f4d06f 0%,
+          #d4af37 50%,
+          #b8951e 100%
+        );
+      }
+
+      .silver-gradient {
+        background: linear-gradient(
+          135deg,
+          #cbd5e1 0%,
+          #9ca3af 50%,
+          #6b7280 100%
+        );
+      }
+
+      /* Animated border for active cards */
+      .animated-border {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .animated-border::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #7b96c8, transparent);
+        transition: left 0.7s;
+      }
+
+      .animated-border:hover::before {
+        left: 100%;
+      }
+
+      /* Floating animation for icons */
+      .floating-icon {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #7b96c8;
+        border-radius: 5px;
+      }
+
+      .dark ::-webkit-scrollbar-track {
+        background: #1a2236;
+      }
+
+      .dark ::-webkit-scrollbar-thumb {
+        background: #5a75a8;
+      }
+
+      /* Chart container styling */
+      .chart-container {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        padding: 20px;
+      }
+
+      .gold-chart-bg {
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.05) 0%,
+          rgba(212, 175, 55, 0.02) 100%
+        );
+        border: 1px solid rgba(212, 175, 55, 0.2);
+      }
+
+      .silver-chart-bg {
+        background: linear-gradient(
+          135deg,
+          rgba(156, 163, 175, 0.05) 0%,
+          rgba(156, 163, 175, 0.02) 100%
+        );
+        border: 1px solid rgba(156, 163, 175, 0.2);
+      }
+
+      .dark .gold-chart-bg {
+        background: linear-gradient(
+          135deg,
+          rgba(212, 175, 55, 0.1) 0%,
+          rgba(212, 175, 55, 0.03) 100%
+        );
+        border: 1px solid rgba(212, 175, 55, 0.3);
+      }
+
+      .dark .silver-chart-bg {
+        background: linear-gradient(
+          135deg,
+          rgba(156, 163, 175, 0.1) 0%,
+          rgba(156, 163, 175, 0.03) 100%
+        );
+        border: 1px solid rgba(156, 163, 175, 0.3);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-800 dark:bg-dark-bg dark:text-dark-text antialiased"
+  >
+    <!-- Parallax Background Layers -->
+    <div class="parallax-bg parallax-layer-1"></div>
+    <div class="parallax-bg parallax-layer-2"></div>
+    <div class="parallax-bg parallax-layer-3"></div>
+
+    <nav
+      class="bg-white/90 dark:bg-dark-card/90 backdrop-blur-xl border-b border-slate-200 dark:border-dark-border sticky top-0 z-50 shadow-lg"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center gap-3">
+            <div
+              class="bg-gradient-to-br from-brand to-brand-dark p-2.5 rounded-xl shadow-lg"
+            >
+              <i class="fa-solid fa-microchip text-white text-lg"></i>
+            </div>
+            <div>
+              <span class="font-bold text-xl tracking-tight dark:text-white"
+                >Bullion<span class="text-brand">Intel</span></span
+              >
+              <p class="text-xs text-slate-500 dark:text-slate-400 -mt-1">
+                Advanced Market Analytics
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div
+              class="hidden sm:flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shadow-inner"
+            >
+              <button
+                onclick="setUnit('tola')"
+                id="btn-tola"
+                class="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand to-brand-dark text-white shadow-md hover:shadow-lg"
+              >
+                Tola
+              </button>
+              <button
+                onclick="setUnit('gram')"
+                id="btn-gram"
+                class="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+              >
+                Gram
+              </button>
+            </div>
+            <button
+              onclick="toggleTheme()"
+              class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+            </button>
+            <button
+              class="p-2.5 rounded-full bg-gradient-to-r from-brand to-brand-dark text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              <i class="fa-solid fa-user text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10"
+    >
+      <!-- Dashboard Header -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" data-aos="fade-up">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="flex justify-between items-end">
+            <div>
+              <h1 class="text-3xl font-bold dark:text-white mb-2">
+                Market Intelligence Dashboard
+              </h1>
+              <p class="text-slate-500 dark:text-slate-400">
+                Real-time algorithmic forecasting with
+                <span class="font-semibold text-brand"
+                  >AI-powered predictions</span
+                >.
+              </p>
+            </div>
+            <div class="text-right">
+              <span
+                class="text-xs font-bold text-slate-400 uppercase tracking-widest"
+                id="nav-date"
+              ></span>
+              <div class="flex items-center justify-end gap-2 mt-1">
+                <span
+                  class="h-2 w-2 rounded-full bg-green-500 animate-pulse"
+                ></span>
+                <span class="text-xs text-slate-500 dark:text-slate-400"
+                  >Live Data</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-5"
+            id="rates-container"
+          ></div>
+        </div>
+
+        <!-- Prediction Card -->
+        <div
+          class="glass-card p-6 border-2 border-brand/30 prediction-glow animated-border"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-white text-lg">
+                Trend Forecast
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Next 24-hour projection
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="bg-brand/10 text-brand text-[10px] px-3 py-1.5 rounded-full font-bold uppercase tracking-tighter"
+                >AI Prediction</span
+              >
+              <i class="fa-solid fa-robot text-brand text-lg floating-icon"></i>
+            </div>
+          </div>
+          <div class="space-y-5">
+            <div
+              class="p-5 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-900/30 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
+            >
+              <div class="flex justify-between items-center mb-1">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-coins text-gold"></i>
+                  <span
+                    class="text-xs text-slate-500 dark:text-slate-400 font-medium"
+                    >Gold Forecast</span
+                  >
+                </div>
+                <span
+                  id="gold-pred-badge"
+                  class="text-[10px] font-bold px-2 py-1 rounded"
+                ></span>
+              </div>
+              <h4
+                class="text-2xl font-black text-slate-800 dark:text-white mt-2"
+                id="gold-prediction-text"
+              >
+                ---
+              </h4>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="text-[10px] text-slate-400"
+                  >Per <span class="unit-label font-semibold">Tola</span></span
+                >
+                <i
+                  class="fa-solid fa-arrow-trend-up text-xs text-green-500"
+                ></i>
+              </div>
+            </div>
+            <div
+              class="p-5 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-900/30 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
+            >
+              <div class="flex justify-between items-center mb-1">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-bars-staggered text-silver"></i>
+                  <span
+                    class="text-xs text-slate-500 dark:text-slate-400 font-medium"
+                    >Silver Forecast</span
+                  >
+                </div>
+                <span
+                  id="silver-pred-badge"
+                  class="text-[10px] font-bold px-2 py-1 rounded"
+                ></span>
+              </div>
+              <h4
+                class="text-2xl font-black text-slate-800 dark:text-white mt-2"
+                id="silver-prediction-text"
+              >
+                ---
+              </h4>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="text-[10px] text-slate-400"
+                  >Per <span class="unit-label font-semibold">Tola</span></span
+                >
+                <i
+                  class="fa-solid fa-arrow-trend-up text-xs text-green-500"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <p
+            class="text-[10px] text-slate-400 italic text-center leading-tight mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"
+          >
+            <i class="fa-solid fa-circle-info mr-1"></i> Calculated using linear
+            regression of recent market volatility. Past performance does not
+            guarantee future results.
+          </p>
+        </div>
+      </div>
+
+      <!-- Separate Gold and Silver Charts -->
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        data-aos="fade-up"
+        data-aos-delay="150"
+      >
+        <!-- Gold Chart -->
+        <div class="glass-card p-6 animated-border gold-chart-bg">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-full gold-gradient shadow-md">
+                <i class="fa-solid fa-crown text-white"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-lg dark:text-white">
+                  Gold Price Analysis
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  7-day history with projection
+                </p>
+              </div>
+            </div>
+            <span
+              class="text-[11px] font-bold text-gold uppercase tracking-widest px-3 py-1.5 rounded-full bg-gold/10"
+            >
+              <i class="fa-solid fa-arrow-trend-up mr-1"></i> Volatile
+            </span>
+          </div>
+          <div class="relative h-72 w-full">
+            <canvas id="goldChart"></canvas>
+          </div>
+          <div
+            class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"
+          >
+            <div class="text-center">
+              <span class="text-xs text-slate-500 dark:text-slate-400"
+                >Current</span
+              >
+              <p
+                class="font-bold text-slate-800 dark:text-white"
+                id="gold-current"
+              >
+                ---
+              </p>
+            </div>
+            <div class="text-center">
+              <span class="text-xs text-slate-500 dark:text-slate-400"
+                >7-Day High</span
+              >
+              <p
+                class="font-bold text-slate-800 dark:text-white"
+                id="gold-high"
+              >
+                ---
+              </p>
+            </div>
+            <div class="text-center">
+              <span class="text-xs text-slate-500 dark:text-slate-400"
+                >7-Day Low</span
+              >
+              <p class="font-bold text-slate-800 dark:text-white" id="gold-low">
+                ---
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Silver Chart -->
+        <div class="glass-card p-6 animated-border silver-chart-bg">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-full silver-gradient shadow-md">
+                <i class="fa-solid fa-bars-staggered text-white"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-lg dark:text-white">
+                  Silver Price Analysis
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  7-day history with projection
+                </p>
+              </div>
+            </div>
+            <span
+              class="text-[11px] font-bold text-silver uppercase tracking-widest px-3 py-1.5 rounded-full bg-silver/10"
+            >
+              <i class="fa-solid fa-chart-line mr-1"></i> Stable
+            </span>
+          </div>
+          <div class="relative h-72 w-full">
+            <canvas id="silverChart"></canvas>
+          </div>
+          <div
+            class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"
+          >
+            <div class="text-center">
+              <span class="text-xs text-slate-500 dark:text-slate-400"
+                >Current</span
+              >
+              <p
+                class="font-bold text-slate-800 dark:text-white"
+                id="silver-current"
+              >
+                ---
+              </p>
+            </div>
+            <div class="text-center">
+              <span class="text-xs text-slate-500 dark:text-slate-400"
+                >7-Day High</span
+              >
+              <p
+                class="font-bold text-slate-800 dark:text-white"
+                id="silver-high"
+              >
+                ---
+              </p>
+            </div>
+            <div class="text-center">
+              <span class="text-xs text-slate-500 dark:text-slate-400"
+                >7-Day Low</span
+              >
+              <p
+                class="font-bold text-slate-800 dark:text-white"
+                id="silver-low"
+              >
+                ---
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio and Purchasing Power -->
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <!-- Wealth Tracker -->
+        <div class="glass-card p-6 border-t-4 border-brand">
+          <div class="flex items-center justify-between mb-6">
+            <h2
+              class="text-lg font-bold dark:text-white flex items-center gap-2"
+            >
+              <i class="fa-solid fa-vault text-brand text-xl"></i> Wealth
+              Tracker
+            </h2>
+            <div class="p-2 rounded-full bg-brand/10">
+              <i class="fa-solid fa-piggy-bank text-brand"></i>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-5 mb-6">
+            <div>
+              <label
+                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-coins text-gold"></i> Gold (<span
+                  class="unit-label"
+                  >Tola</span
+                >)
+              </label>
+              <div class="relative">
+                <input
+                  type="number"
+                  id="gold-input"
+                  value="5"
+                  class="custom-input w-full rounded-xl px-5 py-3.5 font-bold text-lg pl-12"
+                />
+                <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+                  <i class="fa-solid fa-coins text-gold text-lg"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-bars-staggered text-silver"></i> Silver
+                (<span class="unit-label">Tola</span>)
+              </label>
+              <div class="relative">
+                <input
+                  type="number"
+                  id="silver-input"
+                  value="100"
+                  class="custom-input w-full rounded-xl px-5 py-3.5 font-bold text-lg pl-12"
+                />
+                <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+                  <i class="fa-solid fa-bars-staggered text-silver text-lg"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-gradient-to-br from-brand to-brand-dark rounded-2xl p-6 text-white shadow-lg shadow-brand/30 hover:shadow-xl transition-all duration-300"
+          >
+            <div class="flex justify-between items-center mb-2">
+              <span
+                class="text-xs font-medium text-white/80 uppercase tracking-widest"
+                >Portfolio Value</span
+              >
+              <i class="fa-solid fa-chart-line text-white/70"></i>
+            </div>
+            <h3 class="text-4xl font-black mt-1 mb-4" id="total-value">
+              NPR 0.00
+            </h3>
+            <div class="h-20">
+              <canvas id="portfolioChart"></canvas>
+            </div>
+            <div
+              class="flex justify-between items-center mt-4 pt-4 border-t border-white/20"
+            >
+              <div class="text-center">
+                <span class="text-xs text-white/70">Gold Value</span>
+                <p class="font-bold text-white" id="gold-value">NPR 0</p>
+              </div>
+              <div class="text-center">
+                <span class="text-xs text-white/70">Silver Value</span>
+                <p class="font-bold text-white" id="silver-value">NPR 0</p>
+              </div>
+              <div class="text-center">
+                <span class="text-xs text-white/70">Total Gain</span>
+                <p class="font-bold text-green-300" id="total-gain">+0.00%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Purchasing Power -->
+        <div class="glass-card p-6 border-t-4 border-emerald-500">
+          <div class="flex items-center justify-between mb-6">
+            <h2
+              class="text-lg font-bold dark:text-white flex items-center gap-2"
+            >
+              <i class="fa-solid fa-coins text-emerald-500 text-xl"></i>
+              Purchasing Power
+            </h2>
+            <div class="p-2 rounded-full bg-emerald-500/10">
+              <i class="fa-solid fa-money-bill-wave text-emerald-500"></i>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-wallet text-emerald-500"></i> Your Budget
+              (NPR)
+            </label>
+            <div class="relative">
+              <input
+                type="number"
+                id="budget-input"
+                class="custom-input w-full rounded-xl px-5 py-3.5 text-xl font-black text-emerald-600 dark:text-emerald-400 pl-12"
+                placeholder="100000"
+                value="100000"
+              />
+              <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <i class="fa-solid fa-nepal text-emerald-500 text-xl"></i>
+              </div>
+            </div>
+            <div class="flex justify-between mt-2">
+              <button
+                onclick="setBudget(50000)"
+                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
+                NPR 50K
+              </button>
+              <button
+                onclick="setBudget(100000)"
+                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
+                NPR 100K
+              </button>
+              <button
+                onclick="setBudget(250000)"
+                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
+                NPR 250K
+              </button>
+              <button
+                onclick="setBudget(500000)"
+                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
+                NPR 500K
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-5">
+            <div
+              class="p-5 rounded-2xl bg-gradient-to-br from-gold-light/20 to-gold/10 border border-gold/20 hover:border-gold/40 transition-all duration-300 text-center hover:scale-[1.02]"
+            >
+              <div
+                class="p-3 rounded-full gold-gradient inline-flex mb-3 shadow-md"
+              >
+                <i class="fa-solid fa-ring text-white text-xl"></i>
+              </div>
+              <h4
+                class="text-2xl font-black dark:text-white mb-1"
+                id="est-gold"
+              >
+                0.00
+              </h4>
+              <span
+                class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase unit-label"
+                >Tola Gold</span
+              >
+              <div class="mt-3 text-xs text-slate-600 dark:text-slate-300">
+                <i class="fa-solid fa-calendar-day mr-1"></i> Est. purchase
+              </div>
+            </div>
+            <div
+              class="p-5 rounded-2xl bg-gradient-to-br from-silver-light/20 to-silver/10 border border-silver/20 hover:border-silver/40 transition-all duration-300 text-center hover:scale-[1.02]"
+            >
+              <div
+                class="p-3 rounded-full silver-gradient inline-flex mb-3 shadow-md"
+              >
+                <i class="fa-solid fa-bars text-white text-xl"></i>
+              </div>
+              <h4
+                class="text-2xl font-black dark:text-white mb-1"
+                id="est-silver"
+              >
+                0.00
+              </h4>
+              <span
+                class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase unit-label"
+                >Tola Silver</span
+              >
+              <div class="mt-3 text-xs text-slate-600 dark:text-slate-300">
+                <i class="fa-solid fa-calendar-day mr-1"></i> Est. purchase
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500 dark:text-slate-400"
+                >Recommended Allocation</span
+              >
+              <span class="text-xs font-bold text-brand"
+                >70% Gold / 30% Silver</span
+              >
+            </div>
+            <div
+              class="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-2"
+            >
+              <div
+                class="h-full gold-gradient rounded-full"
+                style="width: 70%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Market Insights Footer -->
+      <div class="glass-card p-6" data-aos="fade-up" data-aos-delay="250">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-lg font-bold dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-yellow-500"></i> Market
+            Insights
+          </h2>
+          <span
+            class="text-xs font-bold text-brand px-3 py-1.5 rounded-full bg-brand/10"
+          >
+            Updated Today
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div
+            class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+              >
+                <i class="fa-solid fa-chart-simple"></i>
+              </div>
+              <h3 class="font-bold text-slate-800 dark:text-white">
+                Market Trend
+              </h3>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              Gold shows upward momentum with 3.2% weekly increase, indicating
+              bullish sentiment among investors.
+            </p>
+          </div>
+          <div
+            class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="p-2 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+              >
+                <i class="fa-solid fa-arrow-up-right-dots"></i>
+              </div>
+              <h3 class="font-bold text-slate-800 dark:text-white">
+                Silver Outlook
+              </h3>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              Silver remains stable with moderate volatility. Industrial demand
+              continues to support price floor.
+            </p>
+          </div>
+          <div
+            class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
+              >
+                <i class="fa-solid fa-clock-rotate-left"></i>
+              </div>
+              <h3 class="font-bold text-slate-800 dark:text-white">
+                Historical Context
+              </h3>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+              Current prices are 12% above 30-day average, suggesting potential
+              for short-term correction.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-8 border-t border-slate-200 dark:border-dark-border text-center"
+    >
+      <p class="text-sm text-slate-500 dark:text-slate-400">
+        <i class="fa-solid fa-shield-halved text-brand mr-1"></i> BullionIntel
+        &copy; 2026 - Advanced Market Intelligence Platform
+      </p>
+      <p class="text-xs text-slate-400 dark:text-slate-500 mt-2">
+        Data is updated daily. Predictions are based on algorithmic analysis and
+        should not be considered financial advice.
+      </p>
+    </footer>
+
+    <script>
+      // Initialize AOS (Animate on Scroll)
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100,
+      });
+
+      // --- DATA & STATE ---
+      const rawData = {
+        data: {
+          goldRates: {
+            data: [
+              {
+                attributes: {
+                  date: "2026-02-04",
+                  perTolaNPR: 304700,
+                  perGramNPR: 261230,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-02-03",
+                  perTolaNPR: 290300,
+                  perGramNPR: 248885,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-02-02",
+                  perTolaNPR: 286600,
+                  perGramNPR: 245715,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-02-01",
+                  perTolaNPR: 300000,
+                  perGramNPR: 257200,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-01-30",
+                  perTolaNPR: 318800,
+                  perGramNPR: 273320,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-01-29",
+                  perTolaNPR: 339300,
+                  perGramNPR: 290895,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-01-28",
+                  perTolaNPR: 318800,
+                  perGramNPR: 273320,
+                },
+              },
+            ],
+          },
+          silverRates: {
+            data: [
+              {
+                attributes: {
+                  date: "2026-02-04",
+                  perTolaNPR: 5600,
+                  perGramNPR: 4801,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-02-03",
+                  perTolaNPR: 5335,
+                  perGramNPR: 4574,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-02-02",
+                  perTolaNPR: 5200,
+                  perGramNPR: 4458,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-02-01",
+                  perTolaNPR: 5500,
+                  perGramNPR: 4716,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-01-30",
+                  perTolaNPR: 7065,
+                  perGramNPR: 6057.5,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-01-29",
+                  perTolaNPR: 7505,
+                  perGramNPR: 6434,
+                },
+              },
+              {
+                attributes: {
+                  date: "2026-01-28",
+                  perTolaNPR: 7300,
+                  perGramNPR: 6258.5,
+                },
+              },
+            ],
+          },
+        },
+      };
+
+      let currentUnit = "tola",
+        isDark = false,
+        goldChart = null,
+        silverChart = null,
+        portfolioChart = null;
+
+      const parse = (rates) =>
+        rates
+          .map((r) => r.attributes)
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+      const goldHistory = parse(rawData.data.goldRates.data);
+      const silverHistory = parse(rawData.data.silverRates.data);
+      const dates = goldHistory.map((d) =>
+        new Date(d.date).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
+      );
+
+      // --- FORECASTING ENGINE (Linear Regression) ---
+      function predictNextValue(dataArr, key) {
+        const n = dataArr.length;
+        let sumX = 0,
+          sumY = 0,
+          sumXY = 0,
+          sumX2 = 0;
+        for (let i = 0; i < n; i++) {
+          sumX += i;
+          sumY += dataArr[i][key];
+          sumXY += i * dataArr[i][key];
+          sumX2 += i * i;
+        }
+        const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+        const intercept = (sumY - slope * sumX) / n;
+        return slope * n + intercept; // Predict for next index
+      }
+
+      // --- RENDER FUNCTIONS ---
+      function refreshAll() {
+        const priceKey = currentUnit === "tola" ? "perTolaNPR" : "perGramNPR";
+        const curG = goldHistory[goldHistory.length - 1][priceKey];
+        const curS = silverHistory[silverHistory.length - 1][priceKey];
+
+        // Forecasts
+        const predG = predictNextValue(goldHistory, priceKey);
+        const predS = predictNextValue(silverHistory, priceKey);
+
+        // Update Text UI
+        document.getElementById("gold-prediction-text").textContent =
+          `NPR ${Math.round(predG).toLocaleString()}`;
+        document.getElementById("silver-prediction-text").textContent =
+          `NPR ${Math.round(predS).toLocaleString()}`;
+
+        const setBadge = (id, cur, pred) => {
+          const el = document.getElementById(id);
+          const isUp = pred >= cur;
+          el.textContent = isUp ? "BULLISH ▲" : "BEARISH ▼";
+          el.className = `text-[10px] font-bold px-2 py-1 rounded ${isUp ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"}`;
+        };
+        setBadge("gold-pred-badge", curG, predG);
+        setBadge("silver-pred-badge", curS, predS);
+
+        // Update high/low values
+        const goldValues = goldHistory.map((g) => g[priceKey]);
+        const silverValues = silverHistory.map((s) => s[priceKey]);
+
+        document.getElementById("gold-current").textContent =
+          `NPR ${curG.toLocaleString()}`;
+        document.getElementById("gold-high").textContent =
+          `NPR ${Math.max(...goldValues).toLocaleString()}`;
+        document.getElementById("gold-low").textContent =
+          `NPR ${Math.min(...goldValues).toLocaleString()}`;
+
+        document.getElementById("silver-current").textContent =
+          `NPR ${curS.toLocaleString()}`;
+        document.getElementById("silver-high").textContent =
+          `NPR ${Math.max(...silverValues).toLocaleString()}`;
+        document.getElementById("silver-low").textContent =
+          `NPR ${Math.min(...silverValues).toLocaleString()}`;
+
+        renderRates(priceKey);
+        renderGoldChart(priceKey, predG);
+        renderSilverChart(priceKey, predS);
+        calculatePortfolio(priceKey);
+        calculatePurchasingPower(priceKey);
+      }
+
+      function renderRates(key) {
+        const latestG = goldHistory[goldHistory.length - 1],
+          prevG = goldHistory[goldHistory.length - 2];
+        const latestS = silverHistory[silverHistory.length - 1],
+          prevS = silverHistory[silverHistory.length - 2];
+
+        const html = (title, curr, prev, color, icon) => {
+          const diff = curr[key] - prev[key],
+            isUp = diff >= 0;
+          const diffPercent = ((diff / prev[key]) * 100).toFixed(2);
+          return `<div class="glass-card p-5 border-l-4 ${color === "gold" ? "border-gold" : "border-silver"} hover:scale-[1.02] transition-transform duration-300">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-solid ${icon} ${color === "gold" ? "text-gold" : "text-silver"}"></i> ${title}
+                        </p>
+                        <span class="text-[10px] font-bold ${isUp ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"} px-2 py-1 rounded-full">
+                            ${isUp ? "▲" : "▼"} ${Math.abs(diffPercent)}%
+                        </span>
+                    </div>
+                    <h2 class="text-2xl font-black mt-1">NPR ${curr[key].toLocaleString()}</h2>
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="text-xs text-slate-500">
+                            <i class="fa-solid fa-calendar-day mr-1"></i> Per <span class="unit-label font-semibold">Tola</span>
+                        </div>
+                        <div class="text-xs font-bold ${isUp ? "text-green-500" : "text-red-500"}">
+                            ${isUp ? "+" : ""}NPR ${Math.abs(diff).toLocaleString()}
+                        </div>
+                    </div>
+                </div>`;
+        };
+        document.getElementById("rates-container").innerHTML =
+          html("Fine Gold", latestG, prevG, "gold", "fa-crown") +
+          html("Silver", latestS, prevS, "silver", "fa-bars-staggered");
+      }
+
+      function renderGoldChart(key, predG) {
+        const ctx = document.getElementById("goldChart").getContext("2d");
+        const labels = [...dates, "Tomorrow (Est.)"];
+        const dataG = [...goldHistory.map((d) => d[key]), predG];
+
+        if (goldChart) goldChart.destroy();
+        goldChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Gold",
+                data: dataG,
+                borderColor: "#d4af37",
+                backgroundColor: isDark
+                  ? "rgba(212,175,55,0.1)"
+                  : "rgba(212,175,55,0.05)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#d4af37",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                segment: {
+                  borderDash: (ctx) =>
+                    ctx.p1DataIndex === labels.length - 1 ? [5, 5] : undefined,
+                },
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: isDark
+                  ? "rgba(26, 34, 54, 0.9)"
+                  : "rgba(255, 255, 255, 0.9)",
+                titleColor: isDark ? "#e2e8f0" : "#1e293b",
+                bodyColor: isDark ? "#e2e8f0" : "#1e293b",
+                borderColor: "#d4af37",
+                borderWidth: 1,
+              },
+            },
+            interaction: { intersect: false, mode: "index" },
+            scales: {
+              x: {
+                grid: {
+                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: isDark ? "#94a3b8" : "#64748b",
+                  font: { size: 11 },
+                },
+              },
+              y: {
+                grid: {
+                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "#94a3b8",
+                  font: { size: 10 },
+                  callback: (v) => (v / 1000).toFixed(0) + "k",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function renderSilverChart(key, predS) {
+        const ctx = document.getElementById("silverChart").getContext("2d");
+        const labels = [...dates, "Tomorrow (Est.)"];
+        const dataS = [...silverHistory.map((d) => d[key]), predS];
+
+        if (silverChart) silverChart.destroy();
+        silverChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Silver",
+                data: dataS,
+                borderColor: "#9ca3af",
+                backgroundColor: isDark
+                  ? "rgba(156, 163, 175, 0.1)"
+                  : "rgba(156, 163, 175, 0.05)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#9ca3af",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                segment: {
+                  borderDash: (ctx) =>
+                    ctx.p1DataIndex === labels.length - 1 ? [5, 5] : undefined,
+                },
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: isDark
+                  ? "rgba(26, 34, 54, 0.9)"
+                  : "rgba(255, 255, 255, 0.9)",
+                titleColor: isDark ? "#e2e8f0" : "#1e293b",
+                bodyColor: isDark ? "#e2e8f0" : "#1e293b",
+                borderColor: "#9ca3af",
+                borderWidth: 1,
+              },
+            },
+            interaction: { intersect: false, mode: "index" },
+            scales: {
+              x: {
+                grid: {
+                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: isDark ? "#94a3b8" : "#64748b",
+                  font: { size: 11 },
+                },
+              },
+              y: {
+                grid: {
+                  color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "#94a3b8",
+                  font: { size: 10 },
+                  callback: (v) => (v / 1000).toFixed(0) + "k",
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function calculatePortfolio(key) {
+        const g = parseFloat(document.getElementById("gold-input").value) || 0;
+        const s =
+          parseFloat(document.getElementById("silver-input").value) || 0;
+        const history = goldHistory.map(
+          (gh, i) => g * gh[key] + s * silverHistory[i][key],
+        );
+        const total = history[history.length - 1];
+        const goldValue = g * goldHistory[goldHistory.length - 1][key];
+        const silverValue = s * silverHistory[silverHistory.length - 1][key];
+
+        // Calculate percentage gain/loss (simplified)
+        const gainPercent = (((total - history[0]) / history[0]) * 100).toFixed(
+          2,
+        );
+
+        document.getElementById("total-value").textContent =
+          `NPR ${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+        document.getElementById("gold-value").textContent =
+          `NPR ${goldValue.toLocaleString()}`;
+        document.getElementById("silver-value").textContent =
+          `NPR ${silverValue.toLocaleString()}`;
+        document.getElementById("total-gain").textContent =
+          `${gainPercent >= 0 ? "+" : ""}${gainPercent}%`;
+
+        const ctx = document.getElementById("portfolioChart").getContext("2d");
+        if (portfolioChart) portfolioChart.destroy();
+        portfolioChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: dates,
+            datasets: [
+              {
+                data: history,
+                borderColor: "#fff",
+                backgroundColor: "rgba(255,255,255,0.1)",
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.4,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { display: false } },
+            elements: {
+              point: {
+                radius: 0,
+              },
+            },
+          },
+        });
+      }
+
+      function calculatePurchasingPower(key) {
+        const budget =
+          parseFloat(document.getElementById("budget-input").value) || 0;
+        document.getElementById("est-gold").textContent = (
+          budget / goldHistory[goldHistory.length - 1][key]
+        ).toFixed(3);
+        document.getElementById("est-silver").textContent = (
+          budget / silverHistory[silverHistory.length - 1][key]
+        ).toFixed(2);
+      }
+
+      // --- UTILS ---
+      window.setUnit = (u) => {
+        currentUnit = u;
+        const activeClass =
+          "px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand to-brand-dark text-white shadow-md hover:shadow-lg";
+        const inactiveClass =
+          "px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700";
+
+        document.getElementById("btn-tola").className =
+          u === "tola" ? activeClass : inactiveClass;
+        document.getElementById("btn-gram").className =
+          u === "gram" ? activeClass : inactiveClass;
+        document
+          .querySelectorAll(".unit-label")
+          .forEach(
+            (el) => (el.textContent = u.charAt(0).toUpperCase() + u.slice(1)),
+          );
+        refreshAll();
+      };
+
+      window.setBudget = (amount) => {
+        document.getElementById("budget-input").value = amount;
+        calculatePurchasingPower(
+          currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
+        );
+      };
+
+      function toggleTheme() {
+        isDark = !isDark;
+        document.documentElement.classList.toggle("dark");
+        const icon = document.getElementById("theme-icon");
+        icon.className = isDark
+          ? "fa-solid fa-sun text-lg"
+          : "fa-solid fa-moon text-lg";
+
+        // Update charts with new theme
+        refreshAll();
+      }
+
+      // Parallax scroll effect
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        const parallaxLayers = document.querySelectorAll(".parallax-bg");
+
+        parallaxLayers.forEach((layer, index) => {
+          const speed = 0.2 * (index + 1);
+          const yPos = -(scrolled * speed);
+          layer.style.transform = `translateY(${yPos}px) translateZ(-${index * 2}px) scale(${1 + index * 0.5})`;
+        });
+      });
+
+      // Initialize date
+      document.getElementById("nav-date").textContent =
+        new Date().toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+      // Event listeners
+      document
+        .getElementById("gold-input")
+        .addEventListener("input", () =>
+          calculatePortfolio(
+            currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
+          ),
+        );
+      document
+        .getElementById("silver-input")
+        .addEventListener("input", () =>
+          calculatePortfolio(
+            currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
+          ),
+        );
+      document
+        .getElementById("budget-input")
+        .addEventListener("input", () =>
+          calculatePurchasingPower(
+            currentUnit === "tola" ? "perTolaNPR" : "perGramNPR",
+          ),
+        );
+
+      // Initialize
+      refreshAll();
+
+      // Add hover effect to all glass cards
+      document.querySelectorAll(".glass-card").forEach((card) => {
+        card.addEventListener("mouseenter", function () {
+          this.style.transform = "translateY(-8px)";
+        });
+        card.addEventListener("mouseleave", function () {
+          this.style.transform = "translateY(0)";
+        });
+      });
+    </script>
+  </body>
+</html>
