@@ -1,989 +1,1196 @@
 <!doctype html>
-<html lang="en" class="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bullion Intelligence | Advanced Market Dashboard</title>
+    <title>BullionIntel | Market Dashboard</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- AOS Library for scroll animations -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                light: "#afbbeb",
-                DEFAULT: "#7b96c8",
-                dark: "#5a75a8",
-              },
-              gold: {
-                light: "#f4d06f",
-                DEFAULT: "#d4af37",
-                dark: "#b8951e",
-              },
-              silver: {
-                light: "#cbd5e1",
-                DEFAULT: "#9ca3af",
-                dark: "#6b7280",
-              },
-              dark: {
-                bg: "#0a0f1a",
-                card: "#1a2236",
-                border: "#2d3748",
-                text: "#e2e8f0",
-              },
-            },
-            fontFamily: {
-              sans: ["Inter", "sans-serif"],
-              display: ["Inter", "sans-serif"],
-            },
-            animation: {
-              float: "float 6s ease-in-out infinite",
-              "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-              shimmer: "shimmer 4s infinite",
-              "bounce-slow": "bounce-slow 3s infinite",
-            },
-            keyframes: {
-              float: {
-                "0%, 100%": { transform: "translateY(0)" },
-                "50%": { transform: "translateY(-20px)" },
-              },
-              "pulse-glow": {
-                "0%, 100%": { opacity: 1 },
-                "50%": { opacity: 0.7 },
-              },
-              shimmer: {
-                "0%": { transform: "translateX(-100%) rotate(45deg)" },
-                "100%": { transform: "translateX(100%) rotate(45deg)" },
-              },
-              "bounce-slow": {
-                "0%, 100%": { transform: "translateY(0)" },
-                "50%": { transform: "translateY(-10px)" },
-              },
-            },
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
-      body {
-        font-family: "Inter", sans-serif;
-        transition: background-color 0.5s ease;
-        overflow-x: hidden;
+      /* ========================================
+         CSS Reset & Base Styles
+         ======================================== */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
-      /* Parallax background layers */
-      .parallax-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -10;
-        pointer-events: none;
+      :root {
+        /* Primary Colors */
+        --color-primary: #2563eb;
+        --color-primary-dark: #1d4ed8;
+        --color-primary-light: #3b82f6;
+        
+        /* Gold & Silver */
+        --color-gold: #ca8a04;
+        --color-gold-light: #eab308;
+        --color-silver: #64748b;
+        --color-silver-light: #94a3b8;
+        
+        /* Semantic Colors */
+        --color-success: #16a34a;
+        --color-danger: #dc2626;
+        --color-warning: #d97706;
+        
+        /* Neutrals - Light Mode */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --border-color: #e2e8f0;
+        --shadow-color: rgba(0, 0, 0, 0.08);
+        
+        /* Spacing */
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-2xl: 3rem;
+        
+        /* Border Radius */
+        --radius-sm: 6px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        
+        /* Transitions */
+        --transition-fast: 150ms ease;
+        --transition-normal: 250ms ease;
       }
 
-      .parallax-layer-1 {
-        background: radial-gradient(
-          circle at 10% 20%,
-          rgba(123, 150, 200, 0.05) 0%,
-          transparent 20%
-        );
-        transform: translateZ(-2px) scale(1.5);
+      /* Dark Mode Variables */
+      .dark {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-muted: #64748b;
+        --border-color: #334155;
+        --shadow-color: rgba(0, 0, 0, 0.3);
       }
 
-      .parallax-layer-2 {
-        background: radial-gradient(
-          circle at 90% 80%,
-          rgba(212, 175, 55, 0.03) 0%,
-          transparent 20%
-        );
-        transform: translateZ(-4px) scale(2);
-      }
-
-      .parallax-layer-3 {
-        background: radial-gradient(
-          circle at 50% 50%,
-          rgba(156, 163, 175, 0.02) 0%,
-          transparent 25%
-        );
-        transform: translateZ(-6px) scale(2.5);
-      }
-
-      .dark .parallax-layer-1 {
-        background: radial-gradient(
-          circle at 10% 20%,
-          rgba(123, 150, 200, 0.08) 0%,
-          transparent 20%
-        );
-      }
-
-      .dark .parallax-layer-2 {
-        background: radial-gradient(
-          circle at 90% 80%,
-          rgba(212, 175, 55, 0.05) 0%,
-          transparent 20%
-        );
-      }
-
-      .dark .parallax-layer-3 {
-        background: radial-gradient(
-          circle at 50% 50%,
-          rgba(156, 163, 175, 0.03) 0%,
-          transparent 25%
-        );
-      }
-
-      /* Glass card effect */
-      .glass-card {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 20px;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .glass-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
-        border-color: rgba(123, 150, 200, 0.4);
-      }
-
-      .dark .glass-card {
-        background: rgba(26, 34, 54, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .dark .glass-card:hover {
-        border-color: rgba(123, 150, 200, 0.3);
-        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Custom inputs */
-      .custom-input {
-        transition: all 0.3s;
-        border: 1px solid #e2e8f0;
-        background: #f8fafc;
-        border-radius: 14px;
-      }
-
-      .custom-input:hover {
-        border-color: #7b96c8;
-        box-shadow: 0 0 0 3px rgba(123, 150, 200, 0.1);
-      }
-
-      .dark .custom-input {
-        background: rgba(15, 23, 42, 0.7);
-        border-color: #334155;
-        color: #e2e8f0;
-      }
-
-      .dark .custom-input:hover {
-        border-color: #7b96c8;
-        box-shadow: 0 0 0 3px rgba(123, 150, 200, 0.2);
-      }
-
-      .custom-input:focus {
-        border-color: #7b96c8;
-        box-shadow: 0 0 0 4px rgba(123, 150, 200, 0.2);
-        outline: none;
-      }
-
-      /* Shimmer effect */
-      .prediction-glow {
-        position: relative;
-        overflow: hidden;
-      }
-
-      .prediction-glow::after {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-          45deg,
-          transparent,
-          rgba(123, 150, 200, 0.05),
-          transparent
-        );
-        transform: rotate(45deg);
-        animation: shimmer 4s infinite;
-      }
-
-      /* Gold and silver gradients */
-      .gold-gradient {
-        background: linear-gradient(
-          135deg,
-          #f4d06f 0%,
-          #d4af37 50%,
-          #b8951e 100%
-        );
-      }
-
-      .silver-gradient {
-        background: linear-gradient(
-          135deg,
-          #cbd5e1 0%,
-          #9ca3af 50%,
-          #6b7280 100%
-        );
-      }
-
-      /* Animated border for active cards */
-      .animated-border {
-        position: relative;
-        overflow: hidden;
-      }
-
-      .animated-border::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #7b96c8, transparent);
-        transition: left 0.7s;
-      }
-
-      .animated-border:hover::before {
-        left: 100%;
-      }
-
-      /* Floating animation for icons */
-      .floating-icon {
-        animation: float 6s ease-in-out infinite;
-      }
-
-      /* Smooth scroll behavior */
       html {
         scroll-behavior: smooth;
       }
 
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 10px;
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+        transition: background-color var(--transition-normal), color var(--transition-normal);
       }
 
-      ::-webkit-scrollbar-track {
-        background: #f1f5f9;
+      /* ========================================
+         Layout
+         ======================================== */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-lg);
       }
 
-      ::-webkit-scrollbar-thumb {
-        background: #7b96c8;
-        border-radius: 5px;
+      .grid {
+        display: grid;
+        gap: var(--spacing-lg);
       }
 
-      .dark ::-webkit-scrollbar-track {
-        background: #1a2236;
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .dark ::-webkit-scrollbar-thumb {
-        background: #5a75a8;
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
       }
 
-      /* Chart container styling */
-      .chart-container {
+      .grid-main {
+        grid-template-columns: 2fr 1fr;
+      }
+
+      @media (max-width: 992px) {
+        .grid-main,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ========================================
+         Components - Navigation
+         ======================================== */
+      .navbar {
+        background-color: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .navbar-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 64px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        text-decoration: none;
+        color: var(--text-primary);
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        background-color: var(--color-primary);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .logo-text {
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
+
+      .logo-text span {
+        color: var(--color-primary);
+      }
+
+      .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+      }
+
+      /* ========================================
+         Components - Buttons
+         ======================================== */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.875rem;
+        font-weight: 500;
+        border: none;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        text-decoration: none;
+      }
+
+      .btn:focus {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      .btn-primary {
+        background-color: var(--color-primary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--color-primary-dark);
+      }
+
+      .btn-secondary {
+        background-color: var(--bg-tertiary);
+        color: var(--text-primary);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--border-color);
+      }
+
+      .btn-icon {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border-radius: 50%;
+      }
+
+      /* Unit Toggle */
+      .unit-toggle {
+        display: flex;
+        background-color: var(--bg-tertiary);
+        border-radius: var(--radius-md);
+        padding: 4px;
+      }
+
+      .unit-toggle .btn {
+        padding: var(--spacing-sm) var(--spacing-lg);
+      }
+
+      .unit-toggle .btn.active {
+        background-color: var(--color-primary);
+        color: white;
+      }
+
+      .unit-toggle .btn:not(.active) {
+        background-color: transparent;
+      }
+
+      /* ========================================
+         Components - Cards
+         ======================================== */
+      .card {
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+        transition: box-shadow var(--transition-normal);
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 12px var(--shadow-color);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .card-subtitle {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .card-accent-gold {
+        border-top: 3px solid var(--color-gold);
+      }
+
+      .card-accent-silver {
+        border-top: 3px solid var(--color-silver);
+      }
+
+      .card-accent-primary {
+        border-top: 3px solid var(--color-primary);
+      }
+
+      .card-accent-success {
+        border-top: 3px solid var(--color-success);
+      }
+
+      /* ========================================
+         Components - Price Cards
+         ======================================== */
+      .price-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+      }
+
+      .price-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .price-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .price-change {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: var(--radius-sm);
+      }
+
+      .price-change.up {
+        background-color: rgba(22, 163, 74, 0.1);
+        color: var(--color-success);
+      }
+
+      .price-change.down {
+        background-color: rgba(220, 38, 38, 0.1);
+        color: var(--color-danger);
+      }
+
+      .price-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: var(--spacing-sm);
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--border-color);
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      /* ========================================
+         Components - Badges
+         ======================================== */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        border-radius: 20px;
+      }
+
+      .badge-primary {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--color-primary);
+      }
+
+      .badge-gold {
+        background-color: rgba(202, 138, 4, 0.1);
+        color: var(--color-gold);
+      }
+
+      .badge-silver {
+        background-color: rgba(100, 116, 139, 0.1);
+        color: var(--color-silver);
+      }
+
+      .badge-success {
+        background-color: rgba(22, 163, 74, 0.1);
+        color: var(--color-success);
+      }
+
+      .badge-danger {
+        background-color: rgba(220, 38, 38, 0.1);
+        color: var(--color-danger);
+      }
+
+      /* ========================================
+         Components - Inputs
+         ======================================== */
+      .form-group {
+        margin-bottom: var(--spacing-md);
+      }
+
+      .form-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .form-input {
+        width: 100%;
+        padding: var(--spacing-md);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .form-input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .input-with-icon {
         position: relative;
-        border-radius: 16px;
+      }
+
+      .input-with-icon .form-input {
+        padding-left: 44px;
+      }
+
+      .input-with-icon .input-icon {
+        position: absolute;
+        left: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+      }
+
+      /* ========================================
+         Components - Chart
+         ======================================== */
+      .chart-wrapper {
+        position: relative;
+        height: 280px;
+        margin: var(--spacing-lg) 0;
+      }
+
+      .chart-stats {
+        display: flex;
+        justify-content: space-between;
+        padding-top: var(--spacing-md);
+        border-top: 1px solid var(--border-color);
+      }
+
+      .chart-stat {
+        text-align: center;
+      }
+
+      .chart-stat-label {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .chart-stat-value {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      /* ========================================
+         Components - Portfolio
+         ======================================== */
+      .portfolio-summary {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+        color: white;
+      }
+
+      .portfolio-label {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .portfolio-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: var(--spacing-sm) 0;
+      }
+
+      .portfolio-chart {
+        height: 60px;
+        margin: var(--spacing-md) 0;
+      }
+
+      .portfolio-breakdown {
+        display: flex;
+        justify-content: space-between;
+        padding-top: var(--spacing-md);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 0.75rem;
+      }
+
+      .portfolio-breakdown-item {
+        text-align: center;
+      }
+
+      .portfolio-breakdown-label {
+        opacity: 0.7;
+        margin-bottom: 4px;
+      }
+
+      .portfolio-breakdown-value {
+        font-weight: 600;
+      }
+
+      /* ========================================
+         Components - Purchase Estimate
+         ======================================== */
+      .estimate-card {
+        text-align: center;
+        padding: var(--spacing-lg);
+        background-color: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        transition: border-color var(--transition-fast);
+      }
+
+      .estimate-card:hover {
+        border-color: var(--color-primary);
+      }
+
+      .estimate-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--spacing-md);
+        color: white;
+      }
+
+      .estimate-icon.gold {
+        background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+      }
+
+      .estimate-icon.silver {
+        background: linear-gradient(135deg, var(--color-silver-light), var(--color-silver));
+      }
+
+      .estimate-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+
+      .estimate-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+
+      /* Budget Presets */
+      .budget-presets {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+      }
+
+      .budget-presets .btn {
+        flex: 1;
+        font-size: 0.75rem;
+        padding: var(--spacing-sm);
+      }
+
+      /* Allocation Bar */
+      .allocation-bar {
+        margin-top: var(--spacing-lg);
+        padding: var(--spacing-md);
+        background-color: var(--bg-secondary);
+        border-radius: var(--radius-md);
+      }
+
+      .allocation-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .allocation-header-label {
+        color: var(--text-muted);
+      }
+
+      .allocation-header-value {
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      .allocation-track {
+        height: 8px;
+        background-color: var(--bg-tertiary);
+        border-radius: 4px;
         overflow: hidden;
-        padding: 20px;
       }
 
-      .gold-chart-bg {
-        background: linear-gradient(
-          135deg,
-          rgba(212, 175, 55, 0.05) 0%,
-          rgba(212, 175, 55, 0.02) 100%
-        );
-        border: 1px solid rgba(212, 175, 55, 0.2);
+      .allocation-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--color-gold-light), var(--color-gold));
+        border-radius: 4px;
       }
 
-      .silver-chart-bg {
-        background: linear-gradient(
-          135deg,
-          rgba(156, 163, 175, 0.05) 0%,
-          rgba(156, 163, 175, 0.02) 100%
-        );
-        border: 1px solid rgba(156, 163, 175, 0.2);
+      /* ========================================
+         Components - Prediction Card
+         ======================================== */
+      .prediction-item {
+        padding: var(--spacing-md);
+        background-color: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        margin-bottom: var(--spacing-md);
       }
 
-      .dark .gold-chart-bg {
-        background: linear-gradient(
-          135deg,
-          rgba(212, 175, 55, 0.1) 0%,
-          rgba(212, 175, 55, 0.03) 100%
-        );
-        border: 1px solid rgba(212, 175, 55, 0.3);
+      .prediction-item:last-child {
+        margin-bottom: 0;
       }
 
-      .dark .silver-chart-bg {
-        background: linear-gradient(
-          135deg,
-          rgba(156, 163, 175, 0.1) 0%,
-          rgba(156, 163, 175, 0.03) 100%
-        );
-        border: 1px solid rgba(156, 163, 175, 0.3);
+      .prediction-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .prediction-label {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .prediction-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .prediction-meta {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: var(--spacing-sm);
+      }
+
+      .prediction-disclaimer {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-align: center;
+        padding-top: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        border-top: 1px solid var(--border-color);
+        font-style: italic;
+      }
+
+      /* ========================================
+         Components - Insights
+         ======================================== */
+      .insight-card {
+        padding: var(--spacing-md);
+        background-color: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+      }
+
+      .insight-header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .insight-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+      }
+
+      .insight-icon.blue {
+        background-color: rgba(37, 99, 235, 0.1);
+        color: var(--color-primary);
+      }
+
+      .insight-icon.green {
+        background-color: rgba(22, 163, 74, 0.1);
+        color: var(--color-success);
+      }
+
+      .insight-icon.purple {
+        background-color: rgba(147, 51, 234, 0.1);
+        color: #9333ea;
+      }
+
+      .insight-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .insight-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      /* ========================================
+         Page Sections
+         ======================================== */
+      .page-header {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .page-subtitle {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .page-subtitle strong {
+        color: var(--color-primary);
+      }
+
+      .page-meta {
+        text-align: right;
+      }
+
+      .page-date {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .live-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--spacing-xs);
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      .live-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-success);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      /* Main Content */
+      main {
+        padding: var(--spacing-xl) 0;
+      }
+
+      .section {
+        margin-bottom: var(--spacing-xl);
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: var(--spacing-xl) 0;
+        border-top: 1px solid var(--border-color);
+        margin-top: var(--spacing-2xl);
+      }
+
+      .footer-text {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .footer-text i {
+        color: var(--color-primary);
+      }
+
+      .footer-disclaimer {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: var(--spacing-sm);
+      }
+
+      /* ========================================
+         Utility Classes
+         ======================================== */
+      .text-gold { color: var(--color-gold); }
+      .text-silver { color: var(--color-silver); }
+      .text-success { color: var(--color-success); }
+      .text-danger { color: var(--color-danger); }
+      .text-primary { color: var(--color-primary); }
+      .text-muted { color: var(--text-muted); }
+
+      .flex { display: flex; }
+      .flex-between { justify-content: space-between; }
+      .flex-center { align-items: center; }
+      .gap-sm { gap: var(--spacing-sm); }
+      .gap-md { gap: var(--spacing-md); }
+
+      .hidden { display: none; }
+
+      @media (max-width: 576px) {
+        .hide-mobile { display: none; }
       }
     </style>
   </head>
-  <body
-    class="bg-slate-50 text-slate-800 dark:bg-dark-bg dark:text-dark-text antialiased"
-  >
-    <!-- Parallax Background Layers -->
-    <div class="parallax-bg parallax-layer-1"></div>
-    <div class="parallax-bg parallax-layer-2"></div>
-    <div class="parallax-bg parallax-layer-3"></div>
-
-    <nav
-      class="bg-white/90 dark:bg-dark-card/90 backdrop-blur-xl border-b border-slate-200 dark:border-dark-border sticky top-0 z-50 shadow-lg"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-          <div class="flex items-center gap-3">
-            <div
-              class="bg-gradient-to-br from-brand to-brand-dark p-2.5 rounded-xl shadow-lg"
-            >
-              <i class="fa-solid fa-microchip text-white text-lg"></i>
-            </div>
-            <div>
-              <span class="font-bold text-xl tracking-tight dark:text-white"
-                >Bullion<span class="text-brand">Intel</span></span
-              >
-              <p class="text-xs text-slate-500 dark:text-slate-400 -mt-1">
-                Advanced Market Analytics
-              </p>
-            </div>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container navbar-inner">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <i class="fa-solid fa-chart-line"></i>
           </div>
-          <div class="flex items-center gap-4">
-            <div
-              class="hidden sm:flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shadow-inner"
-            >
-              <button
-                onclick="setUnit('tola')"
-                id="btn-tola"
-                class="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand to-brand-dark text-white shadow-md hover:shadow-lg"
-              >
-                Tola
-              </button>
-              <button
-                onclick="setUnit('gram')"
-                id="btn-gram"
-                class="px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
-              >
-                Gram
-              </button>
-            </div>
-            <button
-              onclick="toggleTheme()"
-              class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
-            </button>
-            <button
-              class="p-2.5 rounded-full bg-gradient-to-r from-brand to-brand-dark text-white shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-            >
-              <i class="fa-solid fa-user text-sm"></i>
-            </button>
+          <div class="logo-text">Bullion<span>Intel</span></div>
+        </a>
+        
+        <div class="navbar-actions">
+          <div class="unit-toggle hide-mobile">
+            <button onclick="setUnit('tola')" id="btn-tola" class="btn active">Tola</button>
+            <button onclick="setUnit('gram')" id="btn-gram" class="btn">Gram</button>
           </div>
+          <button onclick="toggleTheme()" class="btn btn-secondary btn-icon" title="Toggle theme">
+            <i id="theme-icon" class="fa-solid fa-moon"></i>
+          </button>
         </div>
       </div>
     </nav>
 
-    <main
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10"
-    >
-      <!-- Dashboard Header -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" data-aos="fade-up">
-        <div class="lg:col-span-2 space-y-6">
-          <div class="flex justify-between items-end">
+    <!-- Main Content -->
+    <main>
+      <div class="container">
+        
+        <!-- Header Section -->
+        <section class="section">
+          <div class="grid grid-main">
             <div>
-              <h1 class="text-3xl font-bold dark:text-white mb-2">
-                Market Intelligence Dashboard
-              </h1>
-              <p class="text-slate-500 dark:text-slate-400">
-                Real-time algorithmic forecasting with
-                <span class="font-semibold text-brand"
-                  >AI-powered predictions</span
-                >.
-              </p>
-            </div>
-            <div class="text-right">
-              <span
-                class="text-xs font-bold text-slate-400 uppercase tracking-widest"
-                id="nav-date"
-              ></span>
-              <div class="flex items-center justify-end gap-2 mt-1">
-                <span
-                  class="h-2 w-2 rounded-full bg-green-500 animate-pulse"
-                ></span>
-                <span class="text-xs text-slate-500 dark:text-slate-400"
-                  >Live Data</span
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-5"
-            id="rates-container"
-          ></div>
-        </div>
-
-        <!-- Prediction Card -->
-        <div
-          class="glass-card p-6 border-2 border-brand/30 prediction-glow animated-border"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
-          <div class="flex items-center justify-between mb-6">
-            <div>
-              <h3 class="font-bold text-slate-800 dark:text-white text-lg">
-                Trend Forecast
-              </h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Next 24-hour projection
-              </p>
-            </div>
-            <div class="flex items-center gap-2">
-              <span
-                class="bg-brand/10 text-brand text-[10px] px-3 py-1.5 rounded-full font-bold uppercase tracking-tighter"
-                >AI Prediction</span
-              >
-              <i class="fa-solid fa-robot text-brand text-lg floating-icon"></i>
-            </div>
-          </div>
-          <div class="space-y-5">
-            <div
-              class="p-5 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-900/30 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
-            >
-              <div class="flex justify-between items-center mb-1">
-                <div class="flex items-center gap-2">
-                  <i class="fa-solid fa-coins text-gold"></i>
-                  <span
-                    class="text-xs text-slate-500 dark:text-slate-400 font-medium"
-                    >Gold Forecast</span
-                  >
+              <div class="page-header flex flex-between flex-center">
+                <div>
+                  <h1 class="page-title">Market Dashboard</h1>
+                  <p class="page-subtitle">Real-time prices with <strong>AI predictions</strong></p>
                 </div>
-                <span
-                  id="gold-pred-badge"
-                  class="text-[10px] font-bold px-2 py-1 rounded"
-                ></span>
-              </div>
-              <h4
-                class="text-2xl font-black text-slate-800 dark:text-white mt-2"
-                id="gold-prediction-text"
-              >
-                ---
-              </h4>
-              <div class="flex items-center gap-2 mt-2">
-                <span class="text-[10px] text-slate-400"
-                  >Per <span class="unit-label font-semibold">Tola</span></span
-                >
-                <i
-                  class="fa-solid fa-arrow-trend-up text-xs text-green-500"
-                ></i>
-              </div>
-            </div>
-            <div
-              class="p-5 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-900/30 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
-            >
-              <div class="flex justify-between items-center mb-1">
-                <div class="flex items-center gap-2">
-                  <i class="fa-solid fa-bars-staggered text-silver"></i>
-                  <span
-                    class="text-xs text-slate-500 dark:text-slate-400 font-medium"
-                    >Silver Forecast</span
-                  >
+                <div class="page-meta hide-mobile">
+                  <div class="page-date" id="nav-date"></div>
+                  <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    <span>Live Data</span>
+                  </div>
                 </div>
-                <span
-                  id="silver-pred-badge"
-                  class="text-[10px] font-bold px-2 py-1 rounded"
-                ></span>
               </div>
-              <h4
-                class="text-2xl font-black text-slate-800 dark:text-white mt-2"
-                id="silver-prediction-text"
-              >
-                ---
-              </h4>
-              <div class="flex items-center gap-2 mt-2">
-                <span class="text-[10px] text-slate-400"
-                  >Per <span class="unit-label font-semibold">Tola</span></span
-                >
-                <i
-                  class="fa-solid fa-arrow-trend-up text-xs text-green-500"
-                ></i>
-              </div>
+              
+              <!-- Price Cards -->
+              <div class="grid grid-2" id="rates-container"></div>
             </div>
-          </div>
-          <p
-            class="text-[10px] text-slate-400 italic text-center leading-tight mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"
-          >
-            <i class="fa-solid fa-circle-info mr-1"></i> Calculated using linear
-            regression of recent market volatility. Past performance does not
-            guarantee future results.
-          </p>
-        </div>
-      </div>
 
-      <!-- Separate Gold and Silver Charts -->
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 gap-8"
-        data-aos="fade-up"
-        data-aos-delay="150"
-      >
-        <!-- Gold Chart -->
-        <div class="glass-card p-6 animated-border gold-chart-bg">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-              <div class="p-2.5 rounded-full gold-gradient shadow-md">
-                <i class="fa-solid fa-crown text-white"></i>
+            <!-- Prediction Card -->
+            <div class="card card-accent-primary">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">
+                    <i class="fa-solid fa-robot text-primary"></i>
+                    Trend Forecast
+                  </h3>
+                  <p class="card-subtitle">Next 24-hour projection</p>
+                </div>
+                <span class="badge badge-primary">AI Prediction</span>
               </div>
-              <div>
-                <h2 class="font-bold text-lg dark:text-white">
-                  Gold Price Analysis
-                </h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400">
-                  7-day history with projection
-                </p>
-              </div>
-            </div>
-            <span
-              class="text-[11px] font-bold text-gold uppercase tracking-widest px-3 py-1.5 rounded-full bg-gold/10"
-            >
-              <i class="fa-solid fa-arrow-trend-up mr-1"></i> Volatile
-            </span>
-          </div>
-          <div class="relative h-72 w-full">
-            <canvas id="goldChart"></canvas>
-          </div>
-          <div
-            class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"
-          >
-            <div class="text-center">
-              <span class="text-xs text-slate-500 dark:text-slate-400"
-                >Current</span
-              >
-              <p
-                class="font-bold text-slate-800 dark:text-white"
-                id="gold-current"
-              >
-                ---
-              </p>
-            </div>
-            <div class="text-center">
-              <span class="text-xs text-slate-500 dark:text-slate-400"
-                >7-Day High</span
-              >
-              <p
-                class="font-bold text-slate-800 dark:text-white"
-                id="gold-high"
-              >
-                ---
-              </p>
-            </div>
-            <div class="text-center">
-              <span class="text-xs text-slate-500 dark:text-slate-400"
-                >7-Day Low</span
-              >
-              <p class="font-bold text-slate-800 dark:text-white" id="gold-low">
-                ---
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Silver Chart -->
-        <div class="glass-card p-6 animated-border silver-chart-bg">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-              <div class="p-2.5 rounded-full silver-gradient shadow-md">
-                <i class="fa-solid fa-bars-staggered text-white"></i>
+              <div class="prediction-item">
+                <div class="prediction-header">
+                  <div class="prediction-label">
+                    <i class="fa-solid fa-coins text-gold"></i>
+                    Gold Forecast
+                  </div>
+                  <span id="gold-pred-badge" class="badge"></span>
+                </div>
+                <div class="prediction-value" id="gold-prediction-text">---</div>
+                <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
               </div>
-              <div>
-                <h2 class="font-bold text-lg dark:text-white">
-                  Silver Price Analysis
-                </h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400">
-                  7-day history with projection
-                </p>
-              </div>
-            </div>
-            <span
-              class="text-[11px] font-bold text-silver uppercase tracking-widest px-3 py-1.5 rounded-full bg-silver/10"
-            >
-              <i class="fa-solid fa-chart-line mr-1"></i> Stable
-            </span>
-          </div>
-          <div class="relative h-72 w-full">
-            <canvas id="silverChart"></canvas>
-          </div>
-          <div
-            class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100 dark:border-slate-800"
-          >
-            <div class="text-center">
-              <span class="text-xs text-slate-500 dark:text-slate-400"
-                >Current</span
-              >
-              <p
-                class="font-bold text-slate-800 dark:text-white"
-                id="silver-current"
-              >
-                ---
-              </p>
-            </div>
-            <div class="text-center">
-              <span class="text-xs text-slate-500 dark:text-slate-400"
-                >7-Day High</span
-              >
-              <p
-                class="font-bold text-slate-800 dark:text-white"
-                id="silver-high"
-              >
-                ---
-              </p>
-            </div>
-            <div class="text-center">
-              <span class="text-xs text-slate-500 dark:text-slate-400"
-                >7-Day Low</span
-              >
-              <p
-                class="font-bold text-slate-800 dark:text-white"
-                id="silver-low"
-              >
-                ---
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Portfolio and Purchasing Power -->
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 gap-8"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
-        <!-- Wealth Tracker -->
-        <div class="glass-card p-6 border-t-4 border-brand">
-          <div class="flex items-center justify-between mb-6">
-            <h2
-              class="text-lg font-bold dark:text-white flex items-center gap-2"
-            >
-              <i class="fa-solid fa-vault text-brand text-xl"></i> Wealth
-              Tracker
-            </h2>
-            <div class="p-2 rounded-full bg-brand/10">
-              <i class="fa-solid fa-piggy-bank text-brand"></i>
+              <div class="prediction-item">
+                <div class="prediction-header">
+                  <div class="prediction-label">
+                    <i class="fa-solid fa-bars-staggered text-silver"></i>
+                    Silver Forecast
+                  </div>
+                  <span id="silver-pred-badge" class="badge"></span>
+                </div>
+                <div class="prediction-value" id="silver-prediction-text">---</div>
+                <div class="prediction-meta">Per <span class="unit-label">Tola</span></div>
+              </div>
+
+              <p class="prediction-disclaimer">
+                <i class="fa-solid fa-circle-info"></i>
+                Calculated using linear regression. Past performance does not guarantee future results.
+              </p>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-5 mb-6">
-            <div>
-              <label
-                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-coins text-gold"></i> Gold (<span
-                  class="unit-label"
-                  >Tola</span
-                >)
-              </label>
-              <div class="relative">
-                <input
-                  type="number"
-                  id="gold-input"
-                  value="5"
-                  class="custom-input w-full rounded-xl px-5 py-3.5 font-bold text-lg pl-12"
-                />
-                <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
-                  <i class="fa-solid fa-coins text-gold text-lg"></i>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="section">
+          <div class="grid grid-2">
+            <!-- Gold Chart -->
+            <div class="card card-accent-gold">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">
+                    <i class="fa-solid fa-crown text-gold"></i>
+                    Gold Price
+                  </h3>
+                  <p class="card-subtitle">7-day history with projection</p>
+                </div>
+                <span class="badge badge-gold">
+                  <i class="fa-solid fa-arrow-trend-up"></i> Volatile
+                </span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="goldChart"></canvas>
+              </div>
+              <div class="chart-stats">
+                <div class="chart-stat">
+                  <div class="chart-stat-label">Current</div>
+                  <div class="chart-stat-value" id="gold-current">---</div>
+                </div>
+                <div class="chart-stat">
+                  <div class="chart-stat-label">7-Day High</div>
+                  <div class="chart-stat-value" id="gold-high">---</div>
+                </div>
+                <div class="chart-stat">
+                  <div class="chart-stat-label">7-Day Low</div>
+                  <div class="chart-stat-value" id="gold-low">---</div>
                 </div>
               </div>
             </div>
-            <div>
-              <label
-                class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 flex items-center gap-2"
-              >
-                <i class="fa-solid fa-bars-staggered text-silver"></i> Silver
-                (<span class="unit-label">Tola</span>)
-              </label>
-              <div class="relative">
-                <input
-                  type="number"
-                  id="silver-input"
-                  value="100"
-                  class="custom-input w-full rounded-xl px-5 py-3.5 font-bold text-lg pl-12"
-                />
-                <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
-                  <i class="fa-solid fa-bars-staggered text-silver text-lg"></i>
+
+            <!-- Silver Chart -->
+            <div class="card card-accent-silver">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">
+                    <i class="fa-solid fa-bars-staggered text-silver"></i>
+                    Silver Price
+                  </h3>
+                  <p class="card-subtitle">7-day history with projection</p>
+                </div>
+                <span class="badge badge-silver">
+                  <i class="fa-solid fa-chart-line"></i> Stable
+                </span>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="silverChart"></canvas>
+              </div>
+              <div class="chart-stats">
+                <div class="chart-stat">
+                  <div class="chart-stat-label">Current</div>
+                  <div class="chart-stat-value" id="silver-current">---</div>
+                </div>
+                <div class="chart-stat">
+                  <div class="chart-stat-label">7-Day High</div>
+                  <div class="chart-stat-value" id="silver-high">---</div>
+                </div>
+                <div class="chart-stat">
+                  <div class="chart-stat-label">7-Day Low</div>
+                  <div class="chart-stat-value" id="silver-low">---</div>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            class="bg-gradient-to-br from-brand to-brand-dark rounded-2xl p-6 text-white shadow-lg shadow-brand/30 hover:shadow-xl transition-all duration-300"
-          >
-            <div class="flex justify-between items-center mb-2">
-              <span
-                class="text-xs font-medium text-white/80 uppercase tracking-widest"
-                >Portfolio Value</span
-              >
-              <i class="fa-solid fa-chart-line text-white/70"></i>
-            </div>
-            <h3 class="text-4xl font-black mt-1 mb-4" id="total-value">
-              NPR 0.00
-            </h3>
-            <div class="h-20">
-              <canvas id="portfolioChart"></canvas>
-            </div>
-            <div
-              class="flex justify-between items-center mt-4 pt-4 border-t border-white/20"
-            >
-              <div class="text-center">
-                <span class="text-xs text-white/70">Gold Value</span>
-                <p class="font-bold text-white" id="gold-value">NPR 0</p>
-              </div>
-              <div class="text-center">
-                <span class="text-xs text-white/70">Silver Value</span>
-                <p class="font-bold text-white" id="silver-value">NPR 0</p>
-              </div>
-              <div class="text-center">
-                <span class="text-xs text-white/70">Total Gain</span>
-                <p class="font-bold text-green-300" id="total-gain">+0.00%</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
 
-        <!-- Purchasing Power -->
-        <div class="glass-card p-6 border-t-4 border-emerald-500">
-          <div class="flex items-center justify-between mb-6">
-            <h2
-              class="text-lg font-bold dark:text-white flex items-center gap-2"
-            >
-              <i class="fa-solid fa-coins text-emerald-500 text-xl"></i>
-              Purchasing Power
-            </h2>
-            <div class="p-2 rounded-full bg-emerald-500/10">
-              <i class="fa-solid fa-money-bill-wave text-emerald-500"></i>
-            </div>
-          </div>
-          <div class="mb-6">
-            <label
-              class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-wallet text-emerald-500"></i> Your Budget
-              (NPR)
-            </label>
-            <div class="relative">
-              <input
-                type="number"
-                id="budget-input"
-                class="custom-input w-full rounded-xl px-5 py-3.5 text-xl font-black text-emerald-600 dark:text-emerald-400 pl-12"
-                placeholder="100000"
-                value="100000"
-              />
-              <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
-                <i class="fa-solid fa-nepal text-emerald-500 text-xl"></i>
+        <!-- Portfolio & Calculator Section -->
+        <section class="section">
+          <div class="grid grid-2">
+            <!-- Wealth Tracker -->
+            <div class="card card-accent-primary">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fa-solid fa-vault text-primary"></i>
+                  Wealth Tracker
+                </h3>
               </div>
-            </div>
-            <div class="flex justify-between mt-2">
-              <button
-                onclick="setBudget(50000)"
-                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-              >
-                NPR 50K
-              </button>
-              <button
-                onclick="setBudget(100000)"
-                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-              >
-                NPR 100K
-              </button>
-              <button
-                onclick="setBudget(250000)"
-                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-              >
-                NPR 250K
-              </button>
-              <button
-                onclick="setBudget(500000)"
-                class="text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-              >
-                NPR 500K
-              </button>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-5">
-            <div
-              class="p-5 rounded-2xl bg-gradient-to-br from-gold-light/20 to-gold/10 border border-gold/20 hover:border-gold/40 transition-all duration-300 text-center hover:scale-[1.02]"
-            >
-              <div
-                class="p-3 rounded-full gold-gradient inline-flex mb-3 shadow-md"
-              >
-                <i class="fa-solid fa-ring text-white text-xl"></i>
-              </div>
-              <h4
-                class="text-2xl font-black dark:text-white mb-1"
-                id="est-gold"
-              >
-                0.00
-              </h4>
-              <span
-                class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase unit-label"
-                >Tola Gold</span
-              >
-              <div class="mt-3 text-xs text-slate-600 dark:text-slate-300">
-                <i class="fa-solid fa-calendar-day mr-1"></i> Est. purchase
-              </div>
-            </div>
-            <div
-              class="p-5 rounded-2xl bg-gradient-to-br from-silver-light/20 to-silver/10 border border-silver/20 hover:border-silver/40 transition-all duration-300 text-center hover:scale-[1.02]"
-            >
-              <div
-                class="p-3 rounded-full silver-gradient inline-flex mb-3 shadow-md"
-              >
-                <i class="fa-solid fa-bars text-white text-xl"></i>
-              </div>
-              <h4
-                class="text-2xl font-black dark:text-white mb-1"
-                id="est-silver"
-              >
-                0.00
-              </h4>
-              <span
-                class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase unit-label"
-                >Tola Silver</span
-              >
-              <div class="mt-3 text-xs text-slate-600 dark:text-slate-300">
-                <i class="fa-solid fa-calendar-day mr-1"></i> Est. purchase
-              </div>
-            </div>
-          </div>
-          <div
-            class="mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800"
-          >
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-500 dark:text-slate-400"
-                >Recommended Allocation</span
-              >
-              <span class="text-xs font-bold text-brand"
-                >70% Gold / 30% Silver</span
-              >
-            </div>
-            <div
-              class="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-2"
-            >
-              <div
-                class="h-full gold-gradient rounded-full"
-                style="width: 70%"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Market Insights Footer -->
-      <div class="glass-card p-6" data-aos="fade-up" data-aos-delay="250">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-lg font-bold dark:text-white flex items-center gap-2">
-            <i class="fa-solid fa-lightbulb text-yellow-500"></i> Market
-            Insights
-          </h2>
-          <span
-            class="text-xs font-bold text-brand px-3 py-1.5 rounded-full bg-brand/10"
-          >
-            Updated Today
-          </span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div
-            class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
-          >
-            <div class="flex items-center gap-3 mb-3">
-              <div
-                class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
-              >
-                <i class="fa-solid fa-chart-simple"></i>
+              <div class="grid grid-2" style="margin-bottom: var(--spacing-lg);">
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="fa-solid fa-coins text-gold"></i>
+                    Gold (<span class="unit-label">Tola</span>)
+                  </label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-coins input-icon text-gold"></i>
+                    <input type="number" id="gold-input" value="5" class="form-input" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="fa-solid fa-bars-staggered text-silver"></i>
+                    Silver (<span class="unit-label">Tola</span>)
+                  </label>
+                  <div class="input-with-icon">
+                    <i class="fa-solid fa-bars-staggered input-icon text-silver"></i>
+                    <input type="number" id="silver-input" value="100" class="form-input" />
+                  </div>
+                </div>
               </div>
-              <h3 class="font-bold text-slate-800 dark:text-white">
-                Market Trend
-              </h3>
-            </div>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              Gold shows upward momentum with 3.2% weekly increase, indicating
-              bullish sentiment among investors.
-            </p>
-          </div>
-          <div
-            class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
-          >
-            <div class="flex items-center gap-3 mb-3">
-              <div
-                class="p-2 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
-              >
-                <i class="fa-solid fa-arrow-up-right-dots"></i>
+
+              <div class="portfolio-summary">
+                <div class="portfolio-label">Portfolio Value</div>
+                <div class="portfolio-value" id="total-value">NPR 0.00</div>
+                <div class="portfolio-chart">
+                  <canvas id="portfolioChart"></canvas>
+                </div>
+                <div class="portfolio-breakdown">
+                  <div class="portfolio-breakdown-item">
+                    <div class="portfolio-breakdown-label">Gold Value</div>
+                    <div class="portfolio-breakdown-value" id="gold-value">NPR 0</div>
+                  </div>
+                  <div class="portfolio-breakdown-item">
+                    <div class="portfolio-breakdown-label">Silver Value</div>
+                    <div class="portfolio-breakdown-value" id="silver-value">NPR 0</div>
+                  </div>
+                  <div class="portfolio-breakdown-item">
+                    <div class="portfolio-breakdown-label">7-Day Change</div>
+                    <div class="portfolio-breakdown-value" id="total-gain">+0.00%</div>
+                  </div>
+                </div>
               </div>
-              <h3 class="font-bold text-slate-800 dark:text-white">
-                Silver Outlook
-              </h3>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              Silver remains stable with moderate volatility. Industrial demand
-              continues to support price floor.
-            </p>
-          </div>
-          <div
-            class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 hover:border-brand/30 transition-all duration-300"
-          >
-            <div class="flex items-center gap-3 mb-3">
-              <div
-                class="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
-              >
-                <i class="fa-solid fa-clock-rotate-left"></i>
+
+            <!-- Purchasing Power -->
+            <div class="card card-accent-success">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fa-solid fa-calculator text-success"></i>
+                  Purchasing Power
+                </h3>
               </div>
-              <h3 class="font-bold text-slate-800 dark:text-white">
-                Historical Context
-              </h3>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fa-solid fa-wallet text-success"></i>
+                  Your Budget (NPR)
+                </label>
+                <div class="input-with-icon">
+                  <i class="fa-solid fa-money-bill input-icon text-success"></i>
+                  <input type="number" id="budget-input" value="100000" placeholder="100000" class="form-input" />
+                </div>
+                <div class="budget-presets">
+                  <button onclick="setBudget(50000)" class="btn btn-secondary">50K</button>
+                  <button onclick="setBudget(100000)" class="btn btn-secondary">100K</button>
+                  <button onclick="setBudget(250000)" class="btn btn-secondary">250K</button>
+                  <button onclick="setBudget(500000)" class="btn btn-secondary">500K</button>
+                </div>
+              </div>
+
+              <div class="grid grid-2" style="margin-top: var(--spacing-lg);">
+                <div class="estimate-card">
+                  <div class="estimate-icon gold">
+                    <i class="fa-solid fa-ring"></i>
+                  </div>
+                  <div class="estimate-value" id="est-gold">0.00</div>
+                  <div class="estimate-label"><span class="unit-label">Tola</span> Gold</div>
+                </div>
+                <div class="estimate-card">
+                  <div class="estimate-icon silver">
+                    <i class="fa-solid fa-bars"></i>
+                  </div>
+                  <div class="estimate-value" id="est-silver">0.00</div>
+                  <div class="estimate-label"><span class="unit-label">Tola</span> Silver</div>
+                </div>
+              </div>
+
+              <div class="allocation-bar">
+                <div class="allocation-header">
+                  <span class="allocation-header-label">Recommended Allocation</span>
+                  <span class="allocation-header-value">70% Gold / 30% Silver</span>
+                </div>
+                <div class="allocation-track">
+                  <div class="allocation-fill" style="width: 70%;"></div>
+                </div>
+              </div>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-300">
-              Current prices are 12% above 30-day average, suggesting potential
-              for short-term correction.
-            </p>
           </div>
-        </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section class="section">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fa-solid fa-lightbulb text-warning"></i>
+                Market Insights
+              </h3>
+              <span class="badge badge-primary">Updated Today</span>
+            </div>
+
+            <div class="grid grid-3">
+              <div class="insight-card">
+                <div class="insight-header">
+                  <div class="insight-icon blue">
+                    <i class="fa-solid fa-chart-simple"></i>
+                  </div>
+                  <h4 class="insight-title">Market Trend</h4>
+                </div>
+                <p class="insight-text">Gold shows upward momentum with 3.2% weekly increase, indicating bullish sentiment among investors.</p>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-header">
+                  <div class="insight-icon green">
+                    <i class="fa-solid fa-arrow-up-right-dots"></i>
+                  </div>
+                  <h4 class="insight-title">Silver Outlook</h4>
+                </div>
+                <p class="insight-text">Silver remains stable with moderate volatility. Industrial demand continues to support price floor.</p>
+              </div>
+
+              <div class="insight-card">
+                <div class="insight-header">
+                  <div class="insight-icon purple">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                  </div>
+                  <h4 class="insight-title">Historical Context</h4>
+                </div>
+                <p class="insight-text">Current prices are 12% above 30-day average, suggesting potential for short-term correction.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
 
-    <footer
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-8 border-t border-slate-200 dark:border-dark-border text-center"
-    >
-      <p class="text-sm text-slate-500 dark:text-slate-400">
-        <i class="fa-solid fa-shield-halved text-brand mr-1"></i> BullionIntel
-        &copy; 2026 - Advanced Market Intelligence Platform
-      </p>
-      <p class="text-xs text-slate-400 dark:text-slate-500 mt-2">
-        Data is updated daily. Predictions are based on algorithmic analysis and
-        should not be considered financial advice.
-      </p>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">
+          <i class="fa-solid fa-shield-halved"></i>
+          BullionIntel &copy; 2026 — Market Intelligence Platform
+        </p>
+        <p class="footer-disclaimer">
+          Data updated daily. Predictions are algorithmic and should not be considered financial advice.
+        </p>
+      </div>
     </footer>
 
     <script>
